@@ -1996,11 +1996,6 @@
           <div id="depto-manual-ok" style="display:none;margin-top:8px;background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:600;"></div>
         </div>
 
-        <!-- 7. NOTAS -->
-        <div class="form-group">
-          <label>Notas / observaciones <span style="font-weight:400;color:#90a4ae;font-size:12px">(opcional)</span></label>
-          <input type="text" name="notas" placeholder="Indicaciones de entrega, referencia, etc.">
-        </div>
         <!-- SELECTOR VISUAL DE COLOR -->
         <div class="form-group">
           <label>Elige tu color <span class="req">*</span></label>
@@ -2722,7 +2717,6 @@
         `🏘️ Notas: ${body.barrio || '(ninguna)'}\n` +
         `🏙️ Municipio: ${body.ciudad}\n` +
         `🗺️ Departamento: ${depto}\n` +
-        `📝 Notas: ${body.notas || '(ninguna)'}\n` +
         `🎨 Color: ${body.color}\n` +
         `🔢 Cantidad: ${body.cantidad}`;
 
@@ -2741,7 +2735,6 @@
             barrio:          body.barrio || '(ninguna)',
             municipio:       body.ciudad,
             departamento:    depto,
-            notas:           body.notas || '(ninguna)',
             color:           body.color,
             cantidad:        body.cantidad,
             pedido_completo: lineasPedido
