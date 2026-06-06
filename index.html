@@ -2473,13 +2473,26 @@
       const badge   = document.getElementById('depto-auto-badge');
       const sel     = document.getElementById('select-depto');
       const okManual= document.getElementById('depto-manual-ok');
+
       if (depto) {
-        sel.value = depto;                      // autocompletar
-        badge.style.display = 'inline';         // "✓ autocompletado"
+        sel.value    = depto;
+        // ── BLOQUEAR: municipio válido encontrado → no dejar cambiar ──
+        sel.disabled = true;
+        sel.style.opacity    = '0.7';
+        sel.style.cursor     = 'not-allowed';
+        sel.style.background = '#f1f8e9';
+        sel.style.borderColor= '#a5d6a7';
+        badge.style.display  = 'inline';
         if (okManual) okManual.style.display = 'none';
       } else {
-        sel.value = '';
-        badge.style.display = 'none';
+        // ── LIBERAR: ciudad borrada o no encontrada → dejar elegir ──
+        sel.value    = '';
+        sel.disabled = false;
+        sel.style.opacity    = '';
+        sel.style.cursor     = '';
+        sel.style.background = '';
+        sel.style.borderColor= '';
+        badge.style.display  = 'none';
       }
     }
 
