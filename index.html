@@ -2666,14 +2666,14 @@
     /* ============================
        ENVÍO DE FORMULARIO
        ============================ */
-    function enviarPedido(e) {
+    async function enviarPedido(e) {
       e.preventDefault();
 
       // ── Validar teléfono 1 (obligatorio) ──
       const tel1 = document.getElementById('input-telefono');
       if (!validarTelefono(tel1, true, 'teléfono principal')) return;
 
-      // ── Validar teléfono 2 (opcional, solo si lo llenó) ──
+      // ── Validar teléfono 2 (opcional) ──
       const tel2 = document.getElementById('input-telefono2');
       if (!validarTelefono(tel2, false, 'teléfono adicional')) return;
 
@@ -2685,17 +2685,15 @@
         document.getElementById('form-color-elegido').style.color = '#c62828';
         return;
       }
-      const form = document.getElementById('form-pedido');
-      const data = new FormData(form);
-      const body = Object.fromEntries(data.entries());
 
-      // Departamento (auto o manual)
-      const depto = document.getElementById('input-departamento').value
-                  || document.getElementById('select-depto').value || '';
-
+      const form    = document.getElementById('form-pedido');
+      const btnEnviar = form.querySelector('button[type="submit"]');
+      const data    = new FormData(form);
+      const body    = Object.fromEntries(data.entries());
+      const depto   = document.getElementById('input-departamento').value
+                    || document.getElementById('select-depto').value || '';
       const nombreCompleto = `${body.nombres} ${body.apellidos}`;
 
-      // Texto del pedido (se usa para email y WhatsApp)
       const lineasPedido =
         `🛒 NUEVO PEDIDO — BlendGo Pro\n\n` +
         `👤 Nombre: ${nombreCompleto}\n` +
@@ -2709,33 +2707,40 @@
         `🎨 Color: ${body.color}\n` +
         `🔢 Cantidad: ${body.cantidad}`;
 
-      // ── 1. ENVIAR AL CORREO (EmailJS, en segundo plano) ──
-      if (typeof emailjs !== 'undefined'
-          && EMAILJS_PUBLIC_KEY  !== "PEGA_TU_PUBLIC_KEY"
-          && EMAILJS_SERVICE_ID  !== "PEGA_TU_SERVICE_ID"
-          && EMAILJS_TEMPLATE_ID !== "PEGA_TU_TEMPLATE_ID") {
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          nombre: nombreCompleto,
-          telefono_1: body.telefono,
-          telefono_2: body.telefono2 || '(no indicado)',
-          direccion: body.direccion,
-          barrio: body.barrio,
-          municipio: body.ciudad,
-          departamento: depto,
-          notas: body.notas || '(ninguna)',
-          color: body.color,
-          cantidad: body.cantidad,
-          pedido_completo: lineasPedido
-        }).catch(err => console.warn('EmailJS error:', err));
+      // ── 1. BLOQUEAR BOTÓN Y MOSTRAR ESTADO DE ENVÍO ──
+      btnEnviar.disabled   = true;
+      btnEnviar.textContent = '📧 Enviando pedido...';
+
+      // ── 2. ENVIAR EMAIL PRIMERO (esperar que termine) ──
+      try {
+        if (typeof emailjs !== 'undefined') {
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            nombre:          nombreCompleto,
+            telefono_1:      body.telefono,
+            telefono_2:      body.telefono2 || '(no indicado)',
+            direccion:       body.direccion,
+            barrio:          body.barrio,
+            municipio:       body.ciudad,
+            departamento:    depto,
+            notas:           body.notas || '(ninguna)',
+            color:           body.color,
+            cantidad:        body.cantidad,
+            pedido_completo: lineasPedido
+          });
+        }
+      } catch(err) {
+        console.warn('EmailJS error:', err);
+        // Si falla el email, continuar igual (no bloquear al cliente)
       }
 
-      // ── 2. ABRIR WHATSAPP HACIA TU NÚMERO con el pedido escrito ──
+      // ── 3. EMAIL ENVIADO → AHORA ABRIR WHATSAPP ──
+      btnEnviar.textContent = '✅ Pedido enviado — abriendo WhatsApp...';
       if (WHATSAPP_NUMERO && !WHATSAPP_NUMERO.includes('X')) {
         const waMsg = encodeURIComponent(lineasPedido);
         window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${waMsg}`, '_blank');
       }
 
-      // ── 3. Mostrar confirmación al cliente ──
+      // ── 4. MOSTRAR CONFIRMACIÓN AL CLIENTE ──
       form.style.display = 'none';
       document.getElementById('mensaje-exito').classList.add('visible');
       document.getElementById('mensaje-exito').scrollIntoView({ behavior: 'smooth' });
