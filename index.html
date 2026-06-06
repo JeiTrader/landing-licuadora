@@ -1338,6 +1338,20 @@
       border-left: 3px solid #4CAF50;
     }
 
+    /* ===== CHISPAS NAVBAR BTN ===== */
+    @keyframes sparkleFade {
+      0%   { opacity: 1; transform: scale(1.2) translate(0, 0); }
+      100% { opacity: 0; transform: scale(0)   translate(var(--tx), var(--ty)); }
+    }
+    .sparkle-dot {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      line-height: 1;
+      animation: sparkleFade 0.75s ease-out forwards;
+      color: #FFD700;
+    }
+
     /* ===== DESKTOP ===== */
     @media (min-width: 768px) {
       .hero { padding: 60px 40px; max-width: 1200px; margin: 0 auto; }
@@ -2118,7 +2132,7 @@
     // 📱 Tu WhatsApp para recibir los pedidos
     const WHATSAPP_NUMERO  = "573123088194";
 
-    const WHATSAPP_ACTIVO  = true;                    // botón flotante de WhatsApp visible
+    const WHATSAPP_ACTIVO  = false;                   // botón flotante desactivado
 
     // Inicializar EmailJS si ya pusiste tu Public Key
     if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== "PEGA_TU_PUBLIC_KEY") {
@@ -2780,9 +2794,55 @@
        Carga imágenes de Cloudinary vía localStorage
        ============================ */
     window.addEventListener('load', () => {
-      // Mostrar galería verde por defecto (sin preseleccionar en el formulario)
       mostrarGaleria('verde');
+      iniciarChispas();
     });
+
+    /* ============================
+       CHISPAS — botón "¡Pedir Ahora!"
+       ============================ */
+    const SPARKLE_CHARS = ['✦','✧','·','⁺','✶','˖','⊹','✸'];
+    const SPARKLE_COLORS = ['#FFD700','#FFA500','#FF6B6B','#fff','#FFE66D','#f8c8ff'];
+
+    function crearChispa(btn) {
+      const rect = btn.getBoundingClientRect();
+      const dot  = document.createElement('span');
+      dot.className = 'sparkle-dot';
+      dot.textContent = SPARKLE_CHARS[Math.floor(Math.random() * SPARKLE_CHARS.length)];
+
+      // Posición aleatoria alrededor del botón
+      const offsetX = (Math.random() - 0.5) * (rect.width + 20);
+      const offsetY = (Math.random() - 0.5) * (rect.height + 14);
+      const x = rect.left + rect.width / 2 + offsetX;
+      const y = rect.top  + rect.height / 2 + offsetY;
+
+      // Dirección de vuelo aleatoria
+      const tx = ((Math.random() - 0.5) * 28).toFixed(1) + 'px';
+      const ty = (-(Math.random() * 22 + 6)).toFixed(1) + 'px';
+
+      dot.style.cssText = `
+        left: ${x}px;
+        top:  ${y}px;
+        font-size: ${(Math.random() * 7 + 6).toFixed(1)}px;
+        color: ${SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)]};
+        --tx: ${tx};
+        --ty: ${ty};
+      `;
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 800);
+    }
+
+    function iniciarChispas() {
+      const btn = document.querySelector('.navbar-cta');
+      if (!btn) return;
+      setInterval(() => {
+        // 2-3 chispas por ráfaga
+        const n = Math.floor(Math.random() * 2) + 2;
+        for (let i = 0; i < n; i++) {
+          setTimeout(() => crearChispa(btn), i * 120);
+        }
+      }, 700);
+    }
   </script>
 
 </body>
