@@ -2129,13 +2129,11 @@
 
     const WHATSAPP_ACTIVO  = false;                   // botón flotante desactivado
 
-    // EmailJS se inicializa cuando el SDK termina de cargar
     function initEmailJS() {
+      // En EmailJS v4 se puede inicializar así o pasar la key directo en send()
       if (typeof emailjs !== 'undefined') {
-        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-        console.log('✅ EmailJS inicializado correctamente');
-      } else {
-        console.warn('⚠️ EmailJS SDK aún no disponible');
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+        console.log('✅ EmailJS listo');
       }
     }
 
@@ -2727,21 +2725,26 @@
       // ── 2. ENVIAR EMAIL PRIMERO (esperar que termine) ──
       try {
         if (typeof emailjs !== 'undefined') {
-          const resp = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-            nombre:          nombreCompleto,
-            telefono_1:      body.telefono,
-            telefono_2:      body.telefono2 || '(no indicado)',
-            direccion:       body.direccion,
-            barrio:          body.barrio || '(ninguna)',
-            municipio:       body.ciudad,
-            departamento:    depto,
-            color:           body.color,
-            cantidad:        body.cantidad,
-            pedido_completo: lineasPedido
-          });
+          const resp = await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+              nombre:          nombreCompleto,
+              telefono_1:      body.telefono,
+              telefono_2:      body.telefono2 || '(no indicado)',
+              direccion:       body.direccion,
+              barrio:          body.barrio || '(ninguna)',
+              municipio:       body.ciudad,
+              departamento:    depto,
+              color:           body.color,
+              cantidad:        body.cantidad,
+              pedido_completo: lineasPedido
+            },
+            { publicKey: EMAILJS_PUBLIC_KEY }   // clave directo en send (más robusto)
+          );
           console.log('✅ Email enviado:', resp.status, resp.text);
         } else {
-          console.warn('⚠️ EmailJS no disponible al enviar');
+          console.warn('⚠️ EmailJS SDK no cargó');
         }
       } catch(err) {
         console.error('❌ EmailJS error:', JSON.stringify(err));
