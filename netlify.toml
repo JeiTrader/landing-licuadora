@@ -1,0 +1,5 @@
+# Configuración de Netlify — Landing BlendGo Pro
+# Sitio estático: index.html en la raíz, sin build.
+[build]
+  publish = "."
+  command = ""

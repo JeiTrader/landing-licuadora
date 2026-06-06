@@ -1,0 +1,2771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Licuadora Eléctrica Personal Portable 380ml — Tu zumo favorito en cualquier lugar. 150W, 22.000 RPM, recargable USB. Envío a todo Colombia.">
+  <meta name="keywords" content="licuadora portatil, licuadora personal, licuadora usb, zumo, batido, jugo verde, colombia, fitness, salud">
+  <title>BlendGo Pro — Licuadora Personal Portable | Envío Gratis Colombia</title>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Cloudinary config -->
+  <script src="cloudinary.config.js"></script>
+  <!-- Municipios Colombia -->
+  <script src="municipios.js"></script>
+
+  <!-- Fuentes premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8fafc;
+      color: #1a1a2e;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    p, label, input, select, li, span, div { font-family: 'Poppins', sans-serif; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== VARIABLES CSS ===== */
+    :root {
+      --verde:   #4CAF50;
+      --rosa:    #E91E8C;
+      --azul:    #2196F3;
+      --morado:  #9C27B0;
+      --naranja: #FF5722;
+      --blanco:  #F5F5F5;
+
+      --primary: #4CAF50;
+      --accent:  #FF3B30;
+      --dark:    #0d1117;
+      --light:   #f8fafc;
+      --gold:    #FFD700;
+
+      --radius: 16px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.12);
+      --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    /* ===== BARRA SUPERIOR ===== */
+    .top-bar {
+      background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .top-bar span { color: var(--gold); font-weight: 700; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    .navbar-logo {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4CAF50, #2196F3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .navbar-cta {
+      background: linear-gradient(135deg, #FF3B30, #FF6B35);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 15px rgba(255,59,48,0.4);
+      transition: all 0.3s ease;
+    }
+    .navbar-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,59,48,0.5); }
+
+    /* ===== TEMPORIZADOR ===== */
+    .timer-bar {
+      background: linear-gradient(90deg, #FF3B30 0%, #FF6B35 100%);
+      color: #fff;
+      text-align: center;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .timer-digits {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 800;
+      margin-left: 8px;
+    }
+    .timer-block {
+      background: rgba(0,0,0,0.2);
+      padding: 2px 8px;
+      border-radius: 6px;
+      min-width: 34px;
+      text-align: center;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(160deg, #e8f5e9 0%, #e3f2fd 50%, #f3e5f5 100%);
+      padding: 40px 20px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(76,175,80,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(76,175,80,0.12);
+      border: 1px solid rgba(76,175,80,0.3);
+      color: #2e7d32;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-badge::before { content: '🔥'; }
+    .hero h1 {
+      font-size: clamp(26px, 7vw, 40px);
+      font-weight: 900;
+      line-height: 1.15;
+      color: #0d1117;
+      margin-bottom: 16px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #4CAF50, #00BCD4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: #455a64;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    /* Selector de colores */
+    .color-selector-wrap { margin-bottom: 28px; }
+    .color-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #546e7a;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .color-selected-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0d1117;
+      margin-bottom: 12px;
+    }
+    .color-swatches {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .color-swatch {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.25s ease;
+      position: relative;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+    .color-swatch:hover { transform: scale(1.15); }
+    .color-swatch.active {
+      border-color: #0d1117;
+      transform: scale(1.2);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+    .color-swatch.active::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* Imagen del producto */
+    .hero-product-img {
+      position: relative;
+      text-align: center;
+      margin: 24px 0;
+    }
+    .product-image-display {
+      width: 240px;
+      height: 300px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+      position: relative;
+      transition: all 0.4s ease;
+      cursor: zoom-in;
+    }
+    .product-image-display img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #fff;
+      transition: opacity 0.35s ease;
+    }
+    .color-filter-overlay {
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: hue;
+      opacity: 0;
+      transition: all 0.4s ease;
+      pointer-events: none;
+      border-radius: 24px;
+    }
+
+    /* Galería de thumbnails */
+    .gallery-thumbs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .gallery-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .gallery-thumb.active {
+      border-color: var(--primary);
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .gallery-thumb:hover { transform: scale(1.08); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 16px;
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.12);
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-prev { left: 12px; }
+    .lightbox-next { right: 12px; }
+
+    /* Badge flotante */
+    .float-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(135deg, #FF3B30, #FF6B35);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: 0 4px 15px rgba(255,59,48,0.4);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* ===== PRECIO ===== */
+    .precio-block {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(76,175,80,0.2);
+    }
+    .precio-original {
+      font-size: 16px;
+      color: #90a4ae;
+      text-decoration: line-through;
+      font-weight: 500;
+    }
+    .precio-actual {
+      font-size: 38px;
+      font-weight: 900;
+      color: #2e7d32;
+      line-height: 1;
+      margin: 4px 0;
+    }
+    .precio-ahorro {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffebee;
+      color: #c62828;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .precio-cuotas {
+      font-size: 13px;
+      color: #546e7a;
+      margin-top: 8px;
+    }
+
+    /* ===== CTA BUTTON — con ZOOM constante ===== */
+    @keyframes btnZoom {
+      0%, 100% { transform: scale(1);    box-shadow: 0 8px 30px rgba(255,59,48,0.45); }
+      50%      { transform: scale(1.06); box-shadow: 0 14px 40px rgba(255,59,48,0.65); }
+    }
+    @keyframes btnShine {
+      0%   { left: -100%; }
+      50%, 100% { left: 120%; }
+    }
+    .btn-cta {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #FF3B30 0%, #FF6B35 100%);
+      color: #fff;
+      text-align: center;
+      padding: 20px 24px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+      animation: btnZoom 1.3s ease-in-out infinite;
+      transform-origin: center;
+    }
+    .btn-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: btnShine 2.5s ease-in-out infinite;
+    }
+    .btn-cta:hover  { animation-play-state: paused; transform: scale(1.08); }
+    .btn-cta:active { transform: scale(0.97); }
+
+    /* Trust indicators */
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .trust-item {
+      text-align: center;
+      padding: 10px 6px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .trust-item .icon { font-size: 20px; margin-bottom: 4px; }
+    .trust-item p { font-size: 11px; font-weight: 600; color: #37474f; line-height: 1.3; }
+
+    /* ===== 3 BLOQUES SHOWCASE ===== */
+    .showcase-section {
+      background: #fff;
+      padding: 0;
+    }
+    .showcase-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .showcase-block:nth-child(even) { background: linear-gradient(135deg, #0d1117, #1a1a2e); color: #fff; }
+    .showcase-block:nth-child(odd)  { background: #fff; }
+
+    .showcase-img-wrap {
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      position: relative;
+    }
+    .showcase-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .showcase-block:hover .showcase-img-wrap img { transform: scale(1.04); }
+
+    .showcase-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%);
+    }
+    .showcase-overlay-text {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      color: #fff;
+    }
+    .showcase-overlay-text .tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .showcase-overlay-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .showcase-content {
+      padding: 28px 20px;
+      width: 100%;
+    }
+    .showcase-content p {
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 20px;
+      opacity: 0.85;
+    }
+    .showcase-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .showcase-pill {
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pill-light {
+      background: rgba(76,175,80,0.1);
+      color: #2e7d32;
+      border: 1px solid rgba(76,175,80,0.25);
+    }
+    .pill-dark {
+      background: rgba(255,255,255,0.1);
+      color: #e0f2f1;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    /* Desktop showcase */
+    @media(min-width: 768px) {
+      .showcase-block {
+        flex-direction: row;
+        min-height: 420px;
+        align-items: stretch;
+      }
+      .showcase-block:nth-child(even) { flex-direction: row-reverse; }
+      .showcase-img-wrap { width: 50%; height: auto; flex-shrink: 0; }
+      .showcase-content { width: 50%; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; }
+    }
+
+    /* ===== SECCIÓN BASE ===== */
+    section { padding: 50px 20px; }
+    .section-title {
+      font-size: clamp(22px, 5vw, 32px);
+      font-weight: 800;
+      text-align: center;
+      color: #0d1117;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .section-title span {
+      background: linear-gradient(135deg, #4CAF50, #00BCD4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-sub {
+      text-align: center;
+      color: #607d8b;
+      font-size: 15px;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    /* ===== PROBLEMA ===== */
+    .problema-section {
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+    }
+    .problema-section .section-title { color: #fff; }
+    .problema-section .section-sub { color: #90a4ae; }
+    .problema-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+    .problema-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .problema-item .emoji { font-size: 24px; flex-shrink: 0; }
+    .problema-item p { font-size: 14px; color: #b0bec5; line-height: 1.6; }
+    .problema-item p strong { color: #fff; }
+    .agitacion-box {
+      background: rgba(255,59,48,0.12);
+      border: 1px solid rgba(255,59,48,0.3);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    .agitacion-box p { color: #ef9a9a; font-size: 15px; line-height: 1.7; }
+    .agitacion-box p strong { color: #fff; }
+
+    /* ===== SOLUCIÓN ===== */
+    .solucion-section { background: #fff; }
+    .solucion-card {
+      background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 24px;
+      border: 1px solid rgba(76,175,80,0.2);
+    }
+    .solucion-card .big-emoji { font-size: 60px; margin-bottom: 16px; }
+    .solucion-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+    .solucion-card p { font-size: 15px; color: #546e7a; line-height: 1.7; }
+
+    /* ===== BENEFICIOS ===== */
+    .beneficios-section { background: #f8fafc; }
+    .beneficio-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .beneficio-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .beneficio-card:hover { transform: translateX(4px); }
+    .beneficio-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .beneficio-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .beneficio-card p { font-size: 13px; color: #607d8b; line-height: 1.5; }
+
+    /* ===== SPECS / CARACTERÍSTICAS ===== */
+    .specs-section { background: #fff; }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .spec-item {
+      background: linear-gradient(135deg, #f8fafc, #e8f5e9);
+      border-radius: 16px;
+      padding: 18px 14px;
+      text-align: center;
+      border: 1px solid rgba(76,175,80,0.15);
+    }
+    .spec-item .spec-val {
+      font-size: 26px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #2e7d32, #00796b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .spec-item .spec-label { font-size: 12px; color: #607d8b; font-weight: 600; margin-top: 4px; }
+
+    /* ===== ANTES/DESPUÉS ===== */
+    .antes-despues-section { background: linear-gradient(160deg, #0d1117, #1a1a2e); }
+    .antes-despues-section .section-title { color: #fff; }
+    .antes-despues-section .section-sub { color: #78909c; }
+    .comparativa {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .comparativa-col {
+      border-radius: 16px;
+      padding: 20px 14px;
+    }
+    .antes {
+      background: rgba(255,59,48,0.08);
+      border: 1px solid rgba(255,59,48,0.2);
+    }
+    .despues {
+      background: rgba(76,175,80,0.08);
+      border: 1px solid rgba(76,175,80,0.2);
+    }
+    .comparativa-col h4 {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .antes h4 { color: #ef5350; }
+    .despues h4 { color: #66bb6a; }
+    .comparativa-col ul { list-style: none; }
+    .comparativa-col ul li {
+      font-size: 13px;
+      color: #b0bec5;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      line-height: 1.4;
+    }
+    .comparativa-col ul li:last-child { border-bottom: none; }
+    .antes ul li::before { content: '✗ '; color: #ef5350; font-weight: 700; }
+    .despues ul li::before { content: '✓ '; color: #66bb6a; font-weight: 700; }
+
+    /* ===== TESTIMONIOS ===== */
+    .testimonios-section { background: #f8fafc; }
+    .testimonios-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .testimonio-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: var(--shadow-sm);
+      border-top: 3px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .testimonio-card:hover { transform: translateY(-4px); }
+    .stars { color: #FFD700; font-size: 16px; margin-bottom: 10px; letter-spacing: 2px; }
+    .testimonio-text {
+      font-size: 14px;
+      color: #37474f;
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+    .testimonio-autor {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .autor-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .autor-info .nombre { font-size: 14px; font-weight: 700; }
+    .autor-info .ciudad { font-size: 12px; color: #90a4ae; }
+    .verificado { font-size: 11px; color: #4CAF50; font-weight: 600; margin-left: auto; }
+
+    /* ===== PRUEBA SOCIAL ===== */
+    .social-proof-section {
+      background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .social-proof-section .section-title { color: #fff; }
+    .counters-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 30px;
+    }
+    .counter-item {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 20px 10px;
+    }
+    .counter-num {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      display: block;
+    }
+    .counter-label { font-size: 11px; color: #90caf9; font-weight: 500; margin-top: 4px; }
+
+    /* ===== FAQ ===== */
+    .faq-section { background: #f8fafc; }
+    .faq-item {
+      background: #fff;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 18px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0d1117;
+      gap: 12px;
+    }
+    .faq-question .arrow {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      color: var(--primary);
+    }
+    .faq-item.open .arrow { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      font-size: 14px;
+      color: #546e7a;
+      line-height: 1.7;
+      padding: 0 18px;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding: 0 18px 18px; }
+
+    /* ===== URGENCIA ===== */
+    .urgencia-section {
+      background: linear-gradient(135deg, #FF3B30, #FF6B35);
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .urgencia-title { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
+    .urgencia-sub { font-size: 15px; opacity: 0.9; margin-bottom: 20px; }
+    .stock-bar-wrap {
+      background: rgba(0,0,0,0.2);
+      border-radius: 50px;
+      height: 12px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .stock-bar {
+      height: 100%;
+      background: #fff;
+      border-radius: 50px;
+      width: 23%;
+      animation: stockPulse 2s infinite;
+    }
+    @keyframes stockPulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+    .stock-text { font-size: 13px; opacity: 0.85; }
+
+    /* ===== FORMULARIO ===== */
+    .form-section { background: #fff; }
+    .form-wrap {
+      background: linear-gradient(160deg, #e8f5e9 0%, #e3f2fd 100%);
+      border-radius: 24px;
+      padding: 30px 20px;
+      border: 2px solid rgba(76,175,80,0.25);
+    }
+    .form-title {
+      font-size: 22px;
+      font-weight: 800;
+      text-align: center;
+      color: #0d1117;
+      margin-bottom: 6px;
+    }
+    .form-sub { text-align: center; font-size: 13px; color: #546e7a; margin-bottom: 24px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #37474f;
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid rgba(0,0,0,0.08);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #0d1117;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(76,175,80,0.1);
+    }
+    .form-resumen {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(76,175,80,0.2);
+    }
+    .form-resumen h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .resumen-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #546e7a;
+      padding: 5px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .resumen-row:last-child { border-bottom: none; font-weight: 700; color: #0d1117; font-size: 15px; }
+    .form-seguridad {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #78909c;
+      margin-top: 12px;
+    }
+
+    /* ===== SELECTOR DE COLOR EN FORMULARIO ===== */
+    .form-color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .form-color-option {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background: #fff;
+    }
+    .form-color-option:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+    .form-color-option.selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(76,175,80,0.2), 0 8px 24px rgba(0,0,0,0.15);
+      transform: translateY(-3px);
+    }
+    .form-color-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .form-color-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      background: #f0f0f0;
+    }
+    .form-color-swatch {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    .form-color-label {
+      display: block;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 4px;
+      color: #37474f;
+      line-height: 1.2;
+      background: #fff;
+    }
+    .form-color-option.selected .form-color-label {
+      color: #1b5e20;
+      background: #f1f8e9;
+    }
+    .form-color-check {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .form-color-option.selected .form-color-check { display: flex; }
+    .form-color-elegido {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2e7d32;
+      min-height: 20px;
+      transition: all 0.3s;
+    }
+    /* Asterisco obligatorio en rojo */
+    .req { color: #e53935; font-weight: 800; margin-left: 1px; }
+
+    /* ===== AUTOCOMPLETE MUNICIPIO ===== */
+    .municipio-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: #fff;
+      border: 2px solid var(--primary);
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 200;
+      display: none;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .municipio-dropdown.open { display: block; }
+    .municipio-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f4f8;
+      transition: background 0.15s;
+      gap: 8px;
+    }
+    .municipio-item:last-child { border-bottom: none; }
+    .municipio-item:hover, .municipio-item.focused {
+      background: #e8f5e9;
+    }
+    .municipio-nombre {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0d1117;
+    }
+    .municipio-nombre mark {
+      background: #c8e6c9;
+      color: #1b5e20;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+    .municipio-depto {
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      padding: 3px 10px;
+      border-radius: 50px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .municipio-no-result {
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #90a4ae;
+      text-align: center;
+    }
+    /* Tag de departamento elegido */
+    .depto-tag {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e8f5e9;
+      border: 1px solid #a5d6a7;
+      color: #2e7d32;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .depto-tag .tag-clear {
+      cursor: pointer;
+      font-size: 14px;
+      color: #81c784;
+      line-height: 1;
+      margin-left: 2px;
+    }
+    .depto-tag .tag-clear:hover { color: #c62828; }
+    /* Departamento siempre visible */
+
+    .form-mensaje {
+      display: none;
+      background: #e8f5e9;
+      border: 2px solid #4CAF50;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .form-mensaje.visible { display: block; }
+    .form-mensaje h3 { color: #2e7d32; font-size: 18px; margin-bottom: 6px; }
+    .form-mensaje p { color: #388e3c; font-size: 14px; }
+
+    /* ===== CTA FINAL ===== */
+    .cta-final-section {
+      background: linear-gradient(160deg, #0d1117, #1a1a2e);
+      color: #fff;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .cta-final-section .section-title { color: #fff; margin-bottom: 12px; }
+    .cta-final-section p { color: #90a4ae; font-size: 15px; margin-bottom: 28px; line-height: 1.7; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #060910;
+      color: #546e7a;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    footer a { color: #78909c; }
+
+    /* ===== WHATSAPP FLOTANTE ===== */
+    .whatsapp-btn {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 58px;
+      height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 6px 25px rgba(37,211,102,0.5);
+      z-index: 999;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover { transform: scale(1.1); }
+    .whatsapp-btn.visible { display: flex; }
+
+    /* ===== ANIMACIONES DE ENTRADA ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== MODAL VALIDACIÓN ===== */
+    @keyframes modalIn {
+      0%   { opacity:0; transform: scale(0.6) translateY(40px); }
+      60%  { transform: scale(1.05) translateY(-6px); }
+      100% { opacity:1; transform: scale(1) translateY(0); }
+    }
+    @keyframes modalOut {
+      0%   { opacity:1; transform: scale(1); }
+      100% { opacity:0; transform: scale(0.75) translateY(30px); }
+    }
+    @keyframes iconBounce {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      25%      { transform: translateY(-10px) rotate(-8deg); }
+      75%      { transform: translateY(-6px) rotate(6deg); }
+    }
+    @keyframes shakeInput {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-5px); }
+      80%     { transform: translateX(5px); }
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.show { display: flex; }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 24px;
+      padding: 36px 28px 28px;
+      max-width: 340px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      animation: modalIn 0.45s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      border-top: 5px solid #FF3B30;
+    }
+    .modal-box.closing {
+      animation: modalOut 0.3s ease forwards;
+    }
+
+    .modal-icon {
+      font-size: 56px;
+      margin-bottom: 14px;
+      display: block;
+      animation: iconBounce 0.8s ease 0.2s both;
+    }
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #c62828;
+      margin-bottom: 10px;
+    }
+    .modal-msg {
+      font-size: 14px;
+      color: #546e7a;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .modal-input-preview {
+      background: #ffebee;
+      border: 2px solid #ef9a9a;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 20px;
+      font-weight: 800;
+      color: #c62828;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+    }
+    .modal-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #FF3B30, #FF6B35);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255,59,48,0.4);
+      transition: transform 0.2s;
+    }
+    .modal-btn:hover { transform: scale(1.03); }
+
+    .input-error {
+      border-color: #FF3B30 !important;
+      box-shadow: 0 0 0 4px rgba(255,59,48,0.15) !important;
+      animation: shakeInput 0.4s ease;
+    }
+    .input-ok {
+      border-color: #4CAF50 !important;
+      box-shadow: 0 0 0 4px rgba(76,175,80,0.12) !important;
+    }
+
+    /* Hint en tiempo real bajo el campo */
+    @keyframes hintIn {
+      from { opacity:0; transform: translateY(-6px); max-height:0; }
+      to   { opacity:1; transform: translateY(0);    max-height:60px; }
+    }
+    @keyframes hintOut {
+      from { opacity:1; transform: translateY(0);    max-height:60px; }
+      to   { opacity:0; transform: translateY(-6px); max-height:0; }
+    }
+    .tel-hint {
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0;
+      margin-top: 0;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+    }
+    .tel-hint.visible {
+      max-height: 60px;
+      padding: 9px 12px;
+      margin-top: 8px;
+    }
+    .tel-hint.error {
+      background: #ffebee;
+      color: #c62828;
+      border-left: 3px solid #FF3B30;
+    }
+    .tel-hint.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border-left: 3px solid #4CAF50;
+    }
+
+    /* ===== DESKTOP ===== */
+    @media (min-width: 768px) {
+      .hero { padding: 60px 40px; max-width: 1200px; margin: 0 auto; }
+      .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+      .product-image-display { width: 320px; height: 400px; }
+      section { padding: 70px 40px; max-width: 1200px; margin: 0 auto; }
+      .beneficio-grid { display: grid; grid-template-columns: 1fr 1fr; }
+      .specs-grid { grid-template-columns: repeat(4, 1fr); }
+      .testimonios-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    🚚 <span>ENVÍO GRATIS</span> a todo Colombia en pedidos hoy &nbsp;|&nbsp; Pago contraentrega disponible
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-logo">⚡ BlendGo Pro</div>
+    <button class="navbar-cta" onclick="document.getElementById('pedido').scrollIntoView({behavior:'smooth'})">
+      ¡Pedir Ahora!
+    </button>
+  </nav>
+
+  <!-- BARRA INFO -->
+  <div class="timer-bar" style="background:linear-gradient(90deg,#1b5e20,#2e7d32);font-size:14px;padding:13px 16px;">
+    🚚 <strong>Envío GRATIS</strong> a todo Colombia &nbsp;·&nbsp; 💳 <strong>Pago contraentrega</strong> &nbsp;·&nbsp; ✅ Producto original
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge">🔥 Más de 4.200 pedidos este mes</div>
+        <h1>Tu <span>Zumo favorito</span> en cualquier lugar, en menos de 30 segundos</h1>
+        <p class="hero-sub">
+          Deja de depender de juguerías costosas. Con la Licuadora Personal BlendGo Pro tienes nutrición fresca y deliciosa donde sea que estés — sin cables, sin complicaciones.
+        </p>
+
+        <!-- PRECIO LIMPIO -->
+        <div class="precio-block fade-in">
+          <div class="precio-actual">$49.900 <small style="font-size:18px;color:#546e7a">COP</small></div>
+          <div style="margin-top:8px;display:inline-block;background:#fff3e0;border:1px solid #ffcc80;color:#e65100;padding:8px 14px;border-radius:12px;font-size:14px;font-weight:800;">
+            🔥 LLEVA 2 POR $90.000 — ¡ahorra $9.800!
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+            <span style="background:#e8f5e9;color:#2e7d32;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:700;">🚚 Envío GRATIS</span>
+            <span style="background:#e3f2fd;color:#1565c0;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:700;">💳 Pago contraentrega</span>
+          </div>
+          <div style="margin-top:10px;font-size:13px;color:#546e7a;font-weight:500;">📦 Licuadora BlendGo Pro 380ml · Elige tu color al pedir</div>
+        </div>
+
+        <button class="btn-cta" onclick="document.getElementById('pedido').scrollIntoView({behavior:'smooth'})">
+          🛒 ¡PEDIR AHORA — ENVÍO GRATIS!
+        </button>
+
+        <!-- TRUST -->
+        <div class="trust-row fade-in">
+          <div class="trust-item"><div class="icon">🔒</div><p>Pago 100% Seguro</p></div>
+          <div class="trust-item"><div class="icon">🚚</div><p>Envío Gratis</p></div>
+          <div class="trust-item"><div class="icon">✅</div><p>Producto original</p></div>
+        </div>
+      </div>
+
+      <!-- IMAGEN DEL PRODUCTO + GALERÍA -->
+      <div class="hero-product-img">
+        <div class="product-image-display" id="product-display" onclick="abrirLightbox()">
+          <img id="product-img" src="" alt="Licuadora Personal Portable BlendGo Pro" style="display:none">
+          <div id="product-emoji" style="display:flex;align-items:center;justify-content:center;height:100%;font-size:80px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">🥤</div>
+          <div class="color-filter-overlay" id="color-overlay"></div>
+        </div>
+
+        <!-- Thumbnails de galería -->
+        <div class="gallery-thumbs" id="gallery-thumbs"></div>
+
+        <div class="float-badge" style="background:linear-gradient(135deg,#2e7d32,#1b5e20);">🚚 ENVÍO<br>GRATIS</div>
+      </div>
+
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox" onclick="cerrarLightbox(event)">
+        <button class="lightbox-close" onclick="cerrarLightbox()">✕</button>
+        <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1);event.stopPropagation()">‹</button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="Producto">
+        <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1);event.stopPropagation()">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visor de zoom simple (clic en cualquier imagen) -->
+  <div class="lightbox" id="zoom-simple" onclick="cerrarZoom()">
+    <button class="lightbox-close" onclick="cerrarZoom()">✕</button>
+    <img class="lightbox-img" id="zoom-simple-img" src="" alt="Imagen ampliada">
+  </div>
+
+  <!-- ===== 3 BLOQUES SHOWCASE ===== -->
+  <div class="showcase-section">
+
+    <!-- BLOQUE 1: Verde con batido -->
+    <div class="showcase-block">
+      <div class="showcase-img-wrap">
+        <img src="https://res.cloudinary.com/dltrz9yvn/image/upload/q_auto,f_auto,w_800,h_640,c_fill,g_center/LV1_qpcjmu"
+             alt="Licuadora Verde con batido de frutas" loading="lazy"
+             style="cursor:zoom-in" onclick="zoomImagen(this.src)">
+        <div class="showcase-overlay"></div>
+        <div class="showcase-overlay-text">
+          <span class="tag">⚡ 30 segundos</span>
+          <h3>De fruta fresca a Zumo perfecto</h3>
+        </div>
+      </div>
+      <div class="showcase-content">
+        <h2 style="font-size:clamp(22px,4vw,32px);margin-bottom:14px;line-height:1.2;">
+          Nutrición real, <em style="color:#4CAF50">dondequiera</em> que estés
+        </h2>
+        <p>Olvídate de juguerías caras y licuadoras que ocupan media cocina. La BlendGo Pro tritura todo en segundos y va contigo al gym, la oficina o de viaje.</p>
+        <div class="showcase-pills">
+          <span class="showcase-pill pill-light">🥝 Frutas frescas</span>
+          <span class="showcase-pill pill-light">🧊 Tritura hielo</span>
+          <span class="showcase-pill pill-light">⚡ 22.000 RPM</span>
+          <span class="showcase-pill pill-light">🔋 Sin cables</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2: Azul con fresas (fondo oscuro) -->
+    <div class="showcase-block">
+      <div class="showcase-img-wrap">
+        <img src="https://res.cloudinary.com/dltrz9yvn/image/upload/q_auto,f_auto,w_800,h_640,c_fill,g_center/LA2_ir45e3"
+             alt="Licuadora Azul con fresas y frutas" loading="lazy"
+             style="cursor:zoom-in" onclick="zoomImagen(this.src)">
+        <div class="showcase-overlay"></div>
+        <div class="showcase-overlay-text">
+          <span class="tag">🍓 Vitaminas puras</span>
+          <h3>Fresas, mango, berries — lo que quieras</h3>
+        </div>
+      </div>
+      <div class="showcase-content">
+        <h2 style="font-size:clamp(22px,4vw,32px);margin-bottom:14px;line-height:1.2;color:#fff;">
+          Tu cuerpo merece lo <em style="color:#64b5f6">mejor</em> cada día
+        </h2>
+        <p style="color:#b0bec5">Con sus 6 cuchillas de acero inoxidable y 150W de potencia real, procesa cualquier fruta al instante. Sin grumos, sin esfuerzo, sin excusas.</p>
+        <div class="showcase-pills">
+          <span class="showcase-pill pill-dark">🫐 Berries congelados</span>
+          <span class="showcase-pill pill-dark">🥭 Mango maduro</span>
+          <span class="showcase-pill pill-dark">🍌 Banano</span>
+          <span class="showcase-pill pill-dark">🥕 Zanahoria</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;margin-bottom:18px;">
+          <div style="font-size:13px;color:#90caf9;font-weight:600;margin-bottom:6px;">📦 Lo que incluye tu pedido</div>
+          <div style="font-size:14px;color:#e0e0e0;line-height:1.8;">✅ 1 Licuadora BlendGo Pro 380ml<br>✅ Cable USB de carga<br>✅ Tapa de transporte<br>✅ Filtro colador incluido</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3: Morado lifestyle -->
+    <div class="showcase-block">
+      <div class="showcase-img-wrap">
+        <img src="https://res.cloudinary.com/dltrz9yvn/image/upload/q_auto,f_auto,w_800,h_640,c_fill,g_center/LM1_jczqbf"
+             alt="Licuadora Morada portable lifestyle" loading="lazy"
+             style="cursor:zoom-in" onclick="zoomImagen(this.src)">
+        <div class="showcase-overlay"></div>
+        <div class="showcase-overlay-text">
+          <span class="tag">🌍 Llévala a todas partes</span>
+          <h3>Tu aliada de vida saludable</h3>
+        </div>
+      </div>
+      <div class="showcase-content">
+        <h2 style="font-size:clamp(22px,4vw,32px);margin-bottom:14px;line-height:1.2;">
+          4 colores. <em style="color:#9C27B0">Una sola decisión</em> que cambia tu rutina
+        </h2>
+        <p>Disponible en 4 colores vibrantes para que elijas el que va con tu personalidad. Compacta, elegante y poderosa — la herramienta que faltaba en tu vida.</p>
+        <div class="showcase-pills">
+          <span class="showcase-pill pill-light" style="background:rgba(76,175,80,0.1);color:#2e7d32">🟢 Verde</span>
+          <span class="showcase-pill pill-light" style="background:rgba(156,39,176,0.1);color:#4a148c">🟣 Morado</span>
+          <span class="showcase-pill pill-light" style="background:rgba(33,150,243,0.1);color:#0d47a1">🔵 Azul</span>
+          <span class="showcase-pill pill-light" style="background:rgba(233,30,140,0.1);color:#880e4f">🩷 Rosado</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;background:#f1f8e9;border:1px solid #a5d6a7;border-radius:12px;padding:14px;margin-bottom:18px;">
+          <span style="font-size:22px">💳</span>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#2e7d32">$49.900 COP</div>
+            <div style="font-size:12px;color:#558b2f">Envío gratis · Pago contraentrega</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ===== FIN SHOWCASE ===== -->
+
+  <!-- ===== PROBLEMA ===== -->
+  <section class="problema-section">
+    <h2 class="section-title">¿Te identificas con esto?</h2>
+    <p class="section-sub">Miles de colombianos lo viven todos los días…</p>
+
+    <div class="problema-lista fade-in">
+      <div class="problema-item">
+        <span class="emoji">😩</span>
+        <p><strong>Quieres comer sano pero no tienes tiempo.</strong> Entre el trabajo, los hijos y las obligaciones, preparar un jugo verde saludable se convierte en una odisea.</p>
+      </div>
+      <div class="problema-item">
+        <span class="emoji">💸</span>
+        <p><strong>Las juguerías te cuestan una fortuna.</strong> Un batido afuera cuesta entre $8.000 y $20.000. Al mes gastas más de $200.000 solo en jugos.</p>
+      </div>
+      <div class="problema-item">
+        <span class="emoji">🏢</span>
+        <p><strong>En la oficina o el gym no tienes licuadora.</strong> Llevas tu fruta pero no puedes hacer nada con ella. Terminas comiendo lo que sea.</p>
+      </div>
+      <div class="problema-item">
+        <span class="emoji">😤</span>
+        <p><strong>Las licuadoras normales son un lío.</strong> Son grandes, hacen ruido, hay que lavarlas con cuidado y no las puedes llevar a ningún lado.</p>
+      </div>
+      <div class="problema-item">
+        <span class="emoji">📉</span>
+        <p><strong>Tus metas de salud se quedan cortas.</strong> Lo intentas, pero sin las herramientas correctas es casi imposible mantener el hábito.</p>
+      </div>
+    </div>
+
+    <div class="agitacion-box fade-in">
+      <p>Y lo más doloroso: cada día que pasa sin cambiar esto, <strong>tu salud, tu energía y tu bienestar siguen igual</strong>. La vida saludable que quieres parece cada vez más lejos…</p>
+    </div>
+  </section>
+
+  <!-- ===== SOLUCIÓN ===== -->
+  <section class="solucion-section">
+    <h2 class="section-title">Existe una <span>solución simple</span></h2>
+    <p class="section-sub">No necesitas cambiar tu estilo de vida. Solo necesitas la herramienta correcta.</p>
+
+    <div class="solucion-card fade-in">
+      <div class="big-emoji">⚡</div>
+      <h3>Conoce la BlendGo Pro</h3>
+      <p>Una licuadora personal recargable por USB que cabe en tu bolso, mochila o maletín. Con un solo botón y en menos de 30 segundos tienes tu Zumo listo. Sin cables, sin enchufes, sin complicaciones. Solo resultados.</p>
+    </div>
+
+    <div class="solucion-card fade-in" style="background:linear-gradient(135deg,#e3f2fd,#e8eaf6);">
+      <div class="big-emoji">🏃‍♀️</div>
+      <h3>Tu aliada de vida saludable</h3>
+      <p>Llévala al gym, a la oficina, al parque, de viaje. Donde tú vayas, ella va. Porque cuidarte no debería depender del lugar donde estás.</p>
+    </div>
+  </section>
+
+  <!-- ===== BENEFICIOS ===== -->
+  <section class="beneficios-section">
+    <h2 class="section-title">Lo que <span>vas a lograr</span></h2>
+    <p class="section-sub">No te vendemos una licuadora. Te vendemos el estilo de vida que quieres.</p>
+
+    <div class="beneficio-grid">
+      <div class="beneficio-card fade-in">
+        <div class="beneficio-icon">⚡</div>
+        <div>
+          <h4>Energía cuando más la necesitas</h4>
+          <p>Un batido cargado de nutrientes en segundos, antes de cualquier reunión, entrenamiento o jornada larga.</p>
+        </div>
+      </div>
+      <div class="beneficio-card fade-in">
+        <div class="beneficio-icon">💰</div>
+        <div>
+          <h4>Ahorra hasta $180.000 al mes</h4>
+          <p>Deja de pagar $15.000 por cada jugo afuera. Prepara los tuyos por menos de $1.500 cada uno.</p>
+        </div>
+      </div>
+      <div class="beneficio-card fade-in">
+        <div class="beneficio-icon">🌍</div>
+        <div>
+          <h4>Libertad total de movimiento</h4>
+          <p>Sin cables, sin enchufes. Carga por USB y dura lo suficiente para preparar tus jugos del día completo.</p>
+        </div>
+      </div>
+      <div class="beneficio-card fade-in">
+        <div class="beneficio-icon">🧹</div>
+        <div>
+          <h4>Limpieza en 10 segundos</h4>
+          <p>Agrega agua, presiona el botón y listo. Sin piezas difíciles, sin olores, sin tiempo perdido.</p>
+        </div>
+      </div>
+      <div class="beneficio-card fade-in">
+        <div class="beneficio-icon">💪</div>
+        <div>
+          <h4>Potencia real que tritura todo</h4>
+          <p>150W y 22.000 RPM. Tritura hielo, frutas congeladas, semillas y vegetales sin esfuerzo.</p>
+        </div>
+      </div>
+      <div class="beneficio-card fade-in">
+        <div class="beneficio-icon">🎨</div>
+        <div>
+          <h4>Diseño que enamora</h4>
+          <p>4 colores vibrantes. Compacta, elegante y moderna. Llévala con orgullo a donde vayas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ESPECIFICACIONES ===== -->
+  <section class="specs-section">
+    <h2 class="section-title">Potencia <span>real</span></h2>
+    <p class="section-sub">Datos técnicos que marcan la diferencia</p>
+
+    <div class="specs-grid fade-in">
+      <div class="spec-item">
+        <div class="spec-val">150W</div>
+        <div class="spec-label">Potencia Nominal</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-val">22K</div>
+        <div class="spec-label">RPM Máximas</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-val">380ml</div>
+        <div class="spec-label">Capacidad</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-val">6</div>
+        <div class="spec-label">Cuchillas de acero</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-val">USB-C</div>
+        <div class="spec-label">Carga fácil</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-val">23cm</div>
+        <div class="spec-label">Alto compacto</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-val">7.5cm</div>
+        <div class="spec-label">Diámetro</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-val">4</div>
+        <div class="spec-label">Colores disponibles</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ANTES / DESPUÉS ===== -->
+  <section class="antes-despues-section">
+    <h2 class="section-title">Tu vida <span style="color:#66bb6a">antes</span> y <span style="color:#64b5f6">después</span></h2>
+    <p class="section-sub">La diferencia que hace una sola decisión de compra</p>
+
+    <div class="comparativa fade-in">
+      <div class="comparativa-col antes">
+        <h4>😞 Sin BlendGo</h4>
+        <ul>
+          <li>Gastas $15k en jugos afuera</li>
+          <li>No puedes licuar en la oficina</li>
+          <li>Comes mal por falta de opciones</li>
+          <li>Tu licuadora ocupa media cocina</li>
+          <li>Limpiarla es un dolor de cabeza</li>
+          <li>Dependes de un enchufe siempre</li>
+          <li>Metas de salud sin cumplir</li>
+        </ul>
+      </div>
+      <div class="comparativa-col despues">
+        <h4>😊 Con BlendGo</h4>
+        <ul>
+          <li>Zumo propio por $1.500</li>
+          <li>La llevas a donde quieras</li>
+          <li>Nutrición fresca a toda hora</li>
+          <li>Cabe en tu bolso o maletín</li>
+          <li>Limpia en 10 segundos</li>
+          <li>Funciona sin enchufes</li>
+          <li>Hábito saludable cumplido</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BOTÓN ESTRATÉGICO 2 (mitad de la página) -->
+    <button class="btn-cta" style="max-width:380px;margin:32px auto 0;" onclick="document.getElementById('pedido').scrollIntoView({behavior:'smooth'})">
+      🛒 ¡PEDIR AHORA — ENVÍO GRATIS!
+    </button>
+  </section>
+
+  <!-- ===== TESTIMONIOS ===== -->
+  <section class="testimonios-section">
+    <h2 class="section-title"><span>Ellos ya</span> transformaron su rutina</h2>
+    <p class="section-sub">Más de 4.200 colombianos la tienen. Estos son sus resultados.</p>
+
+    <div class="testimonios-grid">
+
+      <div class="testimonio-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"Llevo 2 meses usándola todos los días. Antes compraba jugos afuera y gastaba una fortuna. Ahora preparo mis batidos en el trabajo y he bajado 4 kilos sin dieta estricta. ¡Es una maravilla!"</p>
+        <div class="testimonio-autor">
+          <div class="autor-avatar" style="background:linear-gradient(135deg,#e91e8c,#ff4081)">L</div>
+          <div class="autor-info">
+            <div class="nombre">Laura Jiménez</div>
+            <div class="ciudad">📍 Bogotá, Cundinamarca</div>
+          </div>
+          <span class="verificado">✓ Compra verificada</span>
+        </div>
+      </div>
+
+      <div class="testimonio-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"La compré de dudosa pero quedé sorprendida. Tritura hasta hielo y fruta congelada sin problema. La batería dura todo el día. Ya compré una para mi mamá y mi hermana."</p>
+        <div class="testimonio-autor">
+          <div class="autor-avatar" style="background:linear-gradient(135deg,#9c27b0,#e040fb)">C</div>
+          <div class="autor-info">
+            <div class="nombre">Camila Torres</div>
+            <div class="ciudad">📍 Medellín, Antioquia</div>
+          </div>
+          <span class="verificado">✓ Compra verificada</span>
+        </div>
+      </div>
+
+      <div class="testimonio-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"Soy deportista y la uso después de cada entrenamiento. Me preparo el batido de proteína al instante. Pequeña pero potente. La llevo hasta al estadio y la gente me pregunta dónde la conseguí."</p>
+        <div class="testimonio-autor">
+          <div class="autor-avatar" style="background:linear-gradient(135deg,#2196f3,#03a9f4)">A</div>
+          <div class="autor-info">
+            <div class="nombre">Andrés Morales</div>
+            <div class="ciudad">📍 Cali, Valle del Cauca</div>
+          </div>
+          <span class="verificado">✓ Compra verificada</span>
+        </div>
+      </div>
+
+      <div class="testimonio-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"La envoltura y el diseño son muy bonitos, llegó súper bien empacada y rapidísimo. En la oficina todos me preguntan qué es eso que tengo. ¡Me encanta el color rosa! Ya va a volar otra compra."</p>
+        <div class="testimonio-autor">
+          <div class="autor-avatar" style="background:linear-gradient(135deg,#ff5722,#ff7043)">V</div>
+          <div class="autor-info">
+            <div class="nombre">Valentina Ruiz</div>
+            <div class="ciudad">📍 Barranquilla, Atlántico</div>
+          </div>
+          <span class="verificado">✓ Compra verificada</span>
+        </div>
+      </div>
+
+      <div class="testimonio-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonio-text">"Le regalé una a mi esposa y quedó feliz. Dice que no sabe cómo vivía sin ella. La lleva al trabajo, al gym, de viaje. El pago contraentrega me dio mucha confianza. Excelente producto."</p>
+        <div class="testimonio-autor">
+          <div class="autor-avatar" style="background:linear-gradient(135deg,#4caf50,#8bc34a)">R</div>
+          <div class="autor-info">
+            <div class="nombre">Ricardo Espinosa</div>
+            <div class="ciudad">📍 Bucaramanga, Santander</div>
+          </div>
+          <span class="verificado">✓ Compra verificada</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PRUEBA SOCIAL ===== -->
+  <section class="social-proof-section">
+    <h2 class="section-title">Números que hablan solos</h2>
+    <div class="counters-row">
+      <div class="counter-item">
+        <span class="counter-num" data-target="4200">0</span>
+        <div class="counter-label">Pedidos este mes</div>
+      </div>
+      <div class="counter-item">
+        <span class="counter-num" data-target="98">0</span>
+        <div class="counter-label">% clientes satisfechos</div>
+      </div>
+      <div class="counter-item">
+        <span class="counter-num" data-target="5">0</span>
+        <div class="counter-label">Estrellas promedio</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section">
+    <h2 class="section-title">Resolvemos tus <span>dudas</span></h2>
+    <p class="section-sub">Todo lo que necesitas saber antes de tu pedido</p>
+
+    <div id="faq-container">
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Cómo se carga la licuadora?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Se carga por cable USB, igual que tu celular. Solo conecta el cable al puerto USB que tiene en la base, espera que el indicador muestre carga completa y ¡listo! Puedes cargarla en cualquier computador, power bank o cargador de pared.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Tritura hielo y frutas congeladas?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Sí. Sus 6 cuchillas de acero inoxidable y sus 22.000 RPM están diseñadas para procesar hielo, frutas congeladas, semillas y vegetales duros. Para mejores resultados, parte las frutas en trozos pequeños antes de agregarlas.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Cuántos batidos hace con una sola carga?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Con una carga completa puedes preparar aproximadamente 8 a 12 batidos dependiendo de los ingredientes. Para uso diario normal (2-3 batidos por día) la batería te dura varios días entre cargas.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Es difícil limpiarla?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Para nada. Agrega un poco de agua y una gota de jabón, presiona el botón por 30 segundos, enjuaga y lista. También puedes desensamblarla para un lavado más profundo. Las piezas son aptas para lavado a mano.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Hacen envío a mi ciudad?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Sí, hacemos envío a todo Colombia, incluyendo ciudades principales y municipios. El envío es completamente gratis. El tiempo de entrega es de 2 a 5 días hábiles dependiendo de tu ubicación.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Puedo pagar contraentrega?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">¡Claro que sí! Aceptamos pago contraentrega en todo el territorio colombiano. Pagas cuando recibes el producto en la puerta de tu casa. También aceptamos transferencias y pagos en línea.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Qué tan ruidosa es?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Es mucho más silenciosa que una licuadora convencional. Puedes usarla en la oficina sin molestar a tus compañeros. El nivel de ruido es similar al de un ventilador en velocidad media.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Viene en más colores?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Sí, disponemos de 4 colores: Verde, Morado, Azul y Rosado. Puedes elegir tu favorito al momento de hacer el pedido en el formulario.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Es segura para llevar en el bolso?
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">Completamente. La tapa de seguridad incluye un sistema de bloqueo que evita activaciones accidentales. Además incluye una correa de transporte para llevarla cómodamente. Pesa solo 350 gramos.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== CONFIANZA ===== -->
+  <section style="background:linear-gradient(135deg,#1b5e20,#2e7d32);color:#fff;text-align:center;padding:40px 20px;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,30px);margin-bottom:8px;color:#fff;">Tu pedido, simple y seguro</h2>
+    <p style="color:#c8e6c9;font-size:15px;max-width:480px;margin:0 auto 30px;line-height:1.7;">Sin pagos adelantados, sin riesgos. Pagas cuando el producto llega a tu puerta.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:480px;margin:0 auto;">
+      <div style="background:rgba(255,255,255,0.1);border-radius:14px;padding:18px 10px;border:1px solid rgba(255,255,255,0.15)">
+        <div style="font-size:28px;margin-bottom:8px">📦</div>
+        <div style="font-size:12px;font-weight:700;color:#e8f5e9;line-height:1.4">Pago al recibir</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:14px;padding:18px 10px;border:1px solid rgba(255,255,255,0.15)">
+        <div style="font-size:28px;margin-bottom:8px">🚚</div>
+        <div style="font-size:12px;font-weight:700;color:#e8f5e9;line-height:1.4">Envío gratis a toda Colombia</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:14px;padding:18px 10px;border:1px solid rgba(255,255,255,0.15)">
+        <div style="font-size:28px;margin-bottom:8px">✅</div>
+        <div style="font-size:12px;font-weight:700;color:#e8f5e9;line-height:1.4">Producto original</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FORMULARIO ===== -->
+  <section class="form-section" id="pedido">
+    <h2 class="section-title">¡Haz tu <span>pedido ahora!</span></h2>
+    <p class="section-sub">Llena el formulario y recibe tu BlendGo Pro en casa</p>
+
+    <div class="form-wrap">
+      <div class="form-title">📦 Formulario de Pedido</div>
+      <p class="form-sub">Completar toma menos de 1 minuto · Envío gratis · Pago contraentrega</p>
+
+      <form id="form-pedido" onsubmit="enviarPedido(event)">
+        <!-- 1. NOMBRES -->
+        <div class="form-group">
+          <label>Nombres <span class="req">*</span></label>
+          <input type="text" name="nombres" placeholder="Tus nombres" required>
+        </div>
+
+        <!-- 2. APELLIDOS -->
+        <div class="form-group">
+          <label>Apellidos <span class="req">*</span></label>
+          <input type="text" name="apellidos" placeholder="Tus apellidos" required>
+        </div>
+
+        <!-- 3. TELÉFONO 1 (obligatorio) -->
+        <div class="form-group">
+          <label>Teléfono / WhatsApp 1 <span class="req">*</span></label>
+          <input type="tel" name="telefono" id="input-telefono" placeholder="Ej: 3001234567" maxlength="10" inputmode="numeric" required
+            oninput="this.value=this.value.replace(/\D/g,''); validarTelMovil(this)"
+            onblur="validarTelMovil(this, true)">
+          <div class="tel-hint" id="tel-hint"></div>
+        </div>
+
+        <!-- 4. TELÉFONO 2 (opcional) -->
+        <div class="form-group">
+          <label>Teléfono / WhatsApp 2 <span style="font-weight:400;color:#90a4ae;font-size:12px">(opcional)</span></label>
+          <input type="tel" name="telefono2" id="input-telefono2" placeholder="Otro número (opcional)" maxlength="10" inputmode="numeric"
+            oninput="this.value=this.value.replace(/\D/g,''); validarTelMovil(this)"
+            onblur="validarTelMovil(this, true)">
+          <div class="tel-hint" id="tel-hint2"></div>
+        </div>
+
+        <!-- 5. DIRECCIÓN -->
+        <div class="form-group">
+          <label>Dirección de entrega <span class="req">*</span></label>
+          <input type="text" name="direccion" placeholder="Ej: Calle 45 #23-10 Apto 301" required>
+        </div>
+
+        <!-- 6. BARRIO -->
+        <div class="form-group">
+          <label>Barrio <span class="req">*</span></label>
+          <input type="text" name="barrio" placeholder="Tu barrio" required>
+        </div>
+
+        <!-- 7. MUNICIPIO -->
+        <div class="form-group" style="position:relative;">
+          <label>Municipio / Ciudad <span class="req">*</span></label>
+          <input type="text" id="input-ciudad" name="ciudad"
+            placeholder="Escribe tu municipio..." autocomplete="off" required
+            oninput="buscarMunicipio(this.value)"
+            onblur="setTimeout(cerrarDropdown, 200)">
+          <div id="depto-tag" class="depto-tag" style="display:none"></div>
+          <input type="hidden" name="departamento" id="input-departamento">
+          <div class="municipio-dropdown" id="municipio-dropdown"></div>
+        </div>
+
+        <!-- 6. DEPARTAMENTO (se llena solo o manualmente) -->
+        <div class="form-group" id="grupo-depto">
+          <label>Departamento <span class="req">*</span>
+            <span id="depto-auto-badge" style="display:none;font-size:11px;font-weight:500;color:#4CAF50;margin-left:6px;">✓ autocompletado</span>
+          </label>
+          <select id="select-depto" name="departamento_select" required onchange="elegirDeptoManual(this.value)">
+            <option value="">Selecciona tu departamento</option>
+          </select>
+          <div id="depto-manual-ok" style="display:none;margin-top:8px;background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:600;"></div>
+        </div>
+
+        <!-- 7. NOTAS -->
+        <div class="form-group">
+          <label>Notas / observaciones <span style="font-weight:400;color:#90a4ae;font-size:12px">(opcional)</span></label>
+          <input type="text" name="notas" placeholder="Indicaciones de entrega, referencia, etc.">
+        </div>
+        <!-- SELECTOR VISUAL DE COLOR -->
+        <div class="form-group">
+          <label>Elige tu color <span class="req">*</span></label>
+          <!-- Input oculto que lleva el valor real al formulario -->
+          <input type="hidden" name="color" id="form-color-value" required>
+
+          <div class="form-color-grid" id="form-color-grid">
+
+            <!-- Verde -->
+            <div class="form-color-option" id="fco-verde" onclick="elegirColorForm('verde','Verde','#4CAF50')">
+              <div class="form-color-check">✓</div>
+              <img class="form-color-img"
+                src="https://res.cloudinary.com/dltrz9yvn/image/upload/q_auto,f_auto,w_200,h_200,c_fill,g_center/LV1_qpcjmu"
+                alt="Verde" loading="lazy">
+              <span class="form-color-label">🟢 Verde</span>
+            </div>
+
+            <!-- Morado -->
+            <div class="form-color-option" id="fco-morado" onclick="elegirColorForm('morado','Morado','#9C27B0')">
+              <div class="form-color-check">✓</div>
+              <img class="form-color-img"
+                src="https://res.cloudinary.com/dltrz9yvn/image/upload/q_auto,f_auto,w_200,h_200,c_fill,g_center/LM1_jczqbf"
+                alt="Morado" loading="lazy">
+              <span class="form-color-label">🟣 Morado</span>
+            </div>
+
+            <!-- Azul -->
+            <div class="form-color-option" id="fco-azul" onclick="elegirColorForm('azul','Azul','#2196F3')">
+              <div class="form-color-check">✓</div>
+              <img class="form-color-img"
+                src="https://res.cloudinary.com/dltrz9yvn/image/upload/q_auto,f_auto,w_200,h_200,c_fill,g_center/LA1_tkour9"
+                alt="Azul" loading="lazy">
+              <span class="form-color-label">🔵 Azul</span>
+            </div>
+
+            <!-- Rosado -->
+            <div class="form-color-option" id="fco-rosa" onclick="elegirColorForm('rosa','Rosado','#E91E8C')">
+              <div class="form-color-check">✓</div>
+              <div class="form-color-swatch" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0)">🌸</div>
+              <span class="form-color-label">🩷 Rosado</span>
+            </div>
+
+          </div>
+          <div class="form-color-elegido" id="form-color-elegido">Toca un color para elegirlo</div>
+        </div>
+        <div class="form-group">
+          <label>Cantidad <span class="req">*</span></label>
+          <select name="cantidad" required onchange="actualizarTotal(this.value)">
+            <option value="1">1 unidad — $49.900 COP</option>
+            <option value="2">2 unidades — $90.000 COP (¡ahorra $9.800!)</option>
+          </select>
+        </div>
+
+        <div class="form-resumen">
+          <h4>📋 Resumen de tu pedido</h4>
+          <div class="resumen-row"><span>Producto</span><span>Licuadora BlendGo Pro 380ml</span></div>
+          <div class="resumen-row"><span>Color elegido</span><span id="resumen-color" style="color:#1b5e20;font-weight:600">—</span></div>
+          <div class="resumen-row"><span>Cantidad</span><span id="resumen-cantidad">1 unidad</span></div>
+          <div class="resumen-row"><span>Envío</span><span style="color:#4CAF50;font-weight:700">✅ GRATIS</span></div>
+          <div class="resumen-row"><span>Forma de pago</span><span style="color:#1565c0;font-weight:600">💳 Contraentrega</span></div>
+          <div class="resumen-row"><span>TOTAL A PAGAR</span><span id="resumen-total" style="color:#2e7d32;font-size:17px">$49.900 COP</span></div>
+        </div>
+
+        <button type="submit" class="btn-cta">
+          📦 CONFIRMAR PEDIDO — PAGO AL RECIBIR
+        </button>
+        <div class="form-seguridad">
+          🔒 Tus datos están 100% protegidos y seguros
+        </div>
+      </form>
+
+      <div class="form-mensaje" id="mensaje-exito">
+        <h3>🎉 ¡Pedido confirmado!</h3>
+        <p>Tu BlendGo Pro ya está en camino. Te contactaremos pronto para coordinar la entrega. ¡Gracias por tu compra!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="cta-final-section">
+    <h2 class="section-title">¿Lista para tu vida más saludable?</h2>
+    <p>Más de 4.200 personas ya llevan su BlendGo Pro a todas partes. Pide hoy, paga cuando llegue. Sin complicaciones.</p>
+    <br>
+    <div class="trust-row" style="margin-top:24px;max-width:360px;margin:24px auto 0;">
+      <div class="trust-item" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.1)">
+        <div class="icon">🔒</div><p style="color:#90a4ae">Pago Seguro</p>
+      </div>
+      <div class="trust-item" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.1)">
+        <div class="icon">🚚</div><p style="color:#90a4ae">Envío Gratis</p>
+      </div>
+      <div class="trust-item" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.1)">
+        <div class="icon">✅</div><p style="color:#90a4ae">Producto original</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>BlendGo Pro Colombia</strong></p>
+    <p>Envío a todo el territorio nacional · Pago contraentrega</p>
+    <p style="margin-top:10px">© 2026 BlendGo Pro. Todos los derechos reservados.</p>
+    <p><a href="#">Política de privacidad</a> · <a href="#">Términos y condiciones</a> · <a href="#">Devoluciones</a></p>
+  </footer>
+
+  <!-- WHATSAPP FLOTANTE (condicional) -->
+  <a class="whatsapp-btn" id="whatsapp-float" href="#" target="_blank" title="Chatear por WhatsApp">💬</a>
+
+  <!-- ===== MODAL VALIDACIÓN TELÉFONO ===== -->
+  <div class="modal-overlay" id="modal-tel" onclick="cerrarModalTel()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-icon">📵</div>
+      <h3 class="modal-title" id="modal-tel-title">Número inválido</h3>
+      <p class="modal-msg" id="modal-tel-msg">Por favor revisa el número ingresado.</p>
+      <div class="modal-input-preview" id="modal-input-preview"></div>
+      <button class="modal-btn" onclick="cerrarModalTel()">Corregir número</button>
+    </div>
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    /* ============================
+       VARIABLES CONFIGURABLES
+       ============================ */
+    // 📧 EmailJS — saca estos 3 datos en https://dashboard.emailjs.com
+    const EMAILJS_PUBLIC_KEY  = "PEGA_TU_PUBLIC_KEY";    // Account → General → Public Key
+    const EMAILJS_SERVICE_ID  = "PEGA_TU_SERVICE_ID";    // Email Services → Service ID
+    const EMAILJS_TEMPLATE_ID = "PEGA_TU_TEMPLATE_ID";   // Email Templates → Template ID
+
+    // 📱 Tu WhatsApp para recibir los pedidos
+    const WHATSAPP_NUMERO  = "573123088194";
+
+    const WHATSAPP_ACTIVO  = true;                    // botón flotante de WhatsApp visible
+
+    // Inicializar EmailJS si ya pusiste tu Public Key
+    if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== "PEGA_TU_PUBLIC_KEY") {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    }
+
+    /* ============================
+       COLORES DEL PRODUCTO
+       Hue-rotate en grados sobre imagen base verde
+       ============================ */
+    const colorConfig = {
+      verde:   { name: "Verde",  hex: "#4CAF50" },
+      morado:  { name: "Morado", hex: "#9C27B0" },
+      azul:    { name: "Azul",   hex: "#2196F3" },
+      rosa:    { name: "Rosado", hex: "#E91E8C" },
+    };
+
+    // Estado de galería activa
+    let galeria = { color: 'verde', imgs: [], idx: 0 };
+
+    // Actualiza el resumen según la cantidad elegida (2 precios)
+    function actualizarTotal(cantidad) {
+      const total = (cantidad === '2') ? '$90.000 COP' : '$49.900 COP';
+      const texto = (cantidad === '2') ? '2 unidades' : '1 unidad';
+      const tEl = document.getElementById('resumen-total');
+      const cEl = document.getElementById('resumen-cantidad');
+      if (tEl) tEl.textContent = total;
+      if (cEl) cEl.textContent = texto;
+    }
+
+    // Visor de zoom simple para cualquier imagen
+    function zoomImagen(src) {
+      const big = src.replace(/w_\d+,h_\d+,c_(fill|pad)/, 'w_1000,h_1000,c_pad,b_white');
+      document.getElementById('zoom-simple-img').src = big;
+      document.getElementById('zoom-simple').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function cerrarZoom() {
+      document.getElementById('zoom-simple').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Carga la galería del hero para un color (sin depender de swatches)
+    function mostrarGaleria(key) {
+      const cfg = colorConfig[key];
+      if (!cfg) return;
+
+      const imgs   = imagenesColor(key);
+      galeria.color = key;
+      galeria.imgs  = imgs;
+      galeria.idx   = 0;
+
+      const imgEl   = document.getElementById('product-img');
+      const emojiEl = document.getElementById('product-emoji');
+
+      if (imgs.length > 0) {
+        imgEl.style.opacity = '0';
+        imgEl.style.display = 'block';
+        imgEl.src = imgs[0];
+        imgEl.onload = () => { imgEl.style.opacity = '1'; };
+        emojiEl.style.display = 'none';
+      } else {
+        imgEl.style.display = 'none';
+        emojiEl.style.display = 'flex';
+        emojiEl.style.background = `linear-gradient(135deg,${cfg.hex}22,${cfg.hex}44)`;
+      }
+
+      renderThumbs(key, imgs, 0);
+      document.documentElement.style.setProperty('--primary', cfg.hex);
+    }
+
+    /* Renderizar strip de thumbnails */
+    function renderThumbs(color, imgs, activeIdx) {
+      const wrap = document.getElementById('gallery-thumbs');
+      if (imgs.length <= 1) { wrap.innerHTML = ''; return; }
+      wrap.innerHTML = imgs.map((url, i) => {
+        const thumbUrl = url.replace('q_auto,f_auto,w_600,h_700,c_pad,b_white', 'q_auto,f_auto,w_120,h_120,c_fill');
+        return `<div class="gallery-thumb ${i === activeIdx ? 'active' : ''}" onclick="cambiarImagen(${i})">
+          <img src="${thumbUrl}" alt="foto ${i+1}" loading="lazy">
+        </div>`;
+      }).join('');
+    }
+
+    /* Cambiar imagen principal al hacer clic en thumbnail */
+    function cambiarImagen(idx) {
+      galeria.idx = idx;
+      const imgEl = document.getElementById('product-img');
+      imgEl.style.opacity = '0';
+      imgEl.src = galeria.imgs[idx];
+      imgEl.onload = () => { imgEl.style.opacity = '1'; };
+      renderThumbs(galeria.color, galeria.imgs, idx);
+      if (document.getElementById('lightbox').classList.contains('open')) {
+        document.getElementById('lightbox-img').src = galeria.imgs[idx];
+      }
+    }
+
+    /* ── Lightbox ── */
+    function abrirLightbox() {
+      if (!galeria.imgs.length) return;
+      document.getElementById('lightbox-img').src = galeria.imgs[galeria.idx];
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function cerrarLightbox(e) {
+      if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function lightboxNav(dir) {
+      if (!galeria.imgs.length) return;
+      galeria.idx = (galeria.idx + dir + galeria.imgs.length) % galeria.imgs.length;
+      document.getElementById('lightbox-img').src = galeria.imgs[galeria.idx];
+      renderThumbs(galeria.color, galeria.imgs, galeria.idx);
+    }
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') cerrarLightbox({target: lb});
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'ArrowLeft')  lightboxNav(-1);
+    });
+
+    /* ============================
+       SELECTOR DE COLOR EN FORMULARIO
+       ============================ */
+    function elegirColorForm(key, nombre, hex, scrollToForm = false) {
+      // Marcar visualmente
+      document.querySelectorAll('.form-color-option').forEach(el => el.classList.remove('selected'));
+      const card = document.getElementById(`fco-${key}`);
+      if (card) {
+        card.classList.add('selected');
+        // Actualizar color primario del check
+        card.querySelector('.form-color-check').style.background = hex;
+      }
+
+      // Actualizar input oculto
+      document.getElementById('form-color-value').value = nombre;
+
+      // Texto de confirmación
+      const display = document.getElementById('form-color-elegido');
+      if (display) display.textContent = `✅ Elegiste: ${nombre}`;
+
+      // Actualizar resumen del pedido
+      const resColor = document.getElementById('resumen-color');
+      if (resColor) resColor.textContent = nombre;
+
+      // Sincronizar galería del hero con el color elegido
+      mostrarGaleria(key);
+    }
+
+    // Temporizador eliminado — sin promociones artificiales
+
+    /* ============================
+       MODAL VALIDACIÓN TELÉFONO
+       ============================ */
+    /* MUNICIPIOS_CO y DEPARTAMENTOS_CO cargados desde municipios.js */
+    const MUNICIPIOS_CO_OLD_SKIP = true;
+    if(false){const SKIP=[
+      ["__placeholder__","__placeholder__"],
+      ["Medellín","Antioquia"],["Bello","Antioquia"],["Itagüí","Antioquia"],
+      ["Envigado","Antioquia"],["Apartadó","Antioquia"],["Turbo","Antioquia"],
+      ["Rionegro","Antioquia"],["Sabaneta","Antioquia"],["Caucasia","Antioquia"],
+      ["Copacabana","Antioquia"],["La Estrella","Antioquia"],["Caldas","Antioquia"],
+      ["Girardota","Antioquia"],["Barbosa","Antioquia"],["Andes","Antioquia"],
+      ["Yarumal","Antioquia"],["Santa Fe de Antioquia","Antioquia"],
+      ["El Carmen de Viboral","Antioquia"],["Marinilla","Antioquia"],
+      ["San Pedro de los Milagros","Antioquia"],["Concepción","Antioquia"],
+      ["San Francisco","Antioquia"],["Guarne","Antioquia"],["La Ceja","Antioquia"],
+      ["El Retiro","Antioquia"],["Fredonia","Antioquia"],["Jericó","Antioquia"],
+      // ARAUCA
+      ["Arauca","Arauca"],["Saravena","Arauca"],["Tame","Arauca"],["Fortul","Arauca"],
+      // ATLÁNTICO
+      ["Barranquilla","Atlántico"],["Soledad","Atlántico"],["Malambo","Atlántico"],
+      ["Sabanalarga","Atlántico"],["Baranoa","Atlántico"],["Puerto Colombia","Atlántico"],
+      ["Galapa","Atlántico"],["Santo Tomás","Atlántico"],["Palmar de Varela","Atlántico"],
+      // BOLÍVAR
+      ["Cartagena","Bolívar"],["Magangué","Bolívar"],["El Carmen de Bolívar","Bolívar"],
+      ["Turbaco","Bolívar"],["Arjona","Bolívar"],["Mompox","Bolívar"],
+      ["María la Baja","Bolívar"],["Sahagún","Bolívar"],
+      // BOYACÁ
+      ["Tunja","Boyacá"],["Duitama","Boyacá"],["Sogamoso","Boyacá"],
+      ["Chiquinquirá","Boyacá"],["Paipa","Boyacá"],["Villa de Leyva","Boyacá"],
+      ["Moniquirá","Boyacá"],["Nobsa","Boyacá"],["Tibasosa","Boyacá"],
+      ["Firavitoba","Boyacá"],["Samacá","Boyacá"],["Ramiriquí","Boyacá"],
+      // CALDAS
+      ["Manizales","Caldas"],["La Dorada","Caldas"],["Chinchiná","Caldas"],
+      ["Riosucio","Caldas"],["Supía","Caldas"],["Anserma","Caldas"],
+      ["Villamaría","Caldas"],["Pensilvania","Caldas"],["Salamina","Caldas"],
+      // CAQUETÁ
+      ["Florencia","Caquetá"],["San Vicente del Caguán","Caquetá"],
+      ["Puerto Rico","Caquetá"],["El Doncello","Caquetá"],
+      // CASANARE
+      ["Yopal","Casanare"],["Aguazul","Casanare"],["Villanueva","Casanare"],
+      ["Tauramena","Casanare"],["Paz de Ariporo","Casanare"],["Monterrey","Casanare"],
+      // CAUCA
+      ["Popayán","Cauca"],["Santander de Quilichao","Cauca"],["Puerto Tejada","Cauca"],
+      ["Patía","Cauca"],["Guapi","Cauca"],["Corinto","Cauca"],
+      // CESAR
+      ["Valledupar","Cesar"],["Aguachica","Cesar"],["Codazzi","Cesar"],
+      ["Bosconia","Cesar"],["El Copey","Cesar"],["La Jagua de Ibirico","Cesar"],
+      // CHOCÓ
+      ["Quibdó","Chocó"],["Istmina","Chocó"],["Tadó","Chocó"],["Condoto","Chocó"],
+      // CÓRDOBA
+      ["Montería","Córdoba"],["Lorica","Córdoba"],["Cereté","Córdoba"],
+      ["Sahagún","Córdoba"],["Montelíbano","Córdoba"],["Planeta Rica","Córdoba"],
+      ["Tierralta","Córdoba"],["Ciénaga de Oro","Córdoba"],
+      // CUNDINAMARCA
+      ["Bogotá","Cundinamarca"],["Soacha","Cundinamarca"],["Fusagasugá","Cundinamarca"],
+      ["Zipaquirá","Cundinamarca"],["Facatativá","Cundinamarca"],["Chía","Cundinamarca"],
+      ["Mosquera","Cundinamarca"],["Madrid","Cundinamarca"],["Funza","Cundinamarca"],
+      ["Girardot","Cundinamarca"],["Cajicá","Cundinamarca"],["Tocancipá","Cundinamarca"],
+      ["Sopó","Cundinamarca"],["La Calera","Cundinamarca"],["Guasca","Cundinamarca"],
+      ["Cota","Cundinamarca"],["Tenjo","Cundinamarca"],["Tabio","Cundinamarca"],
+      ["Sibaté","Cundinamarca"],["San Francisco","Cundinamarca"],["Anapoima","Cundinamarca"],
+      ["Villeta","Cundinamarca"],["Pacho","Cundinamarca"],["Ubaté","Cundinamarca"],
+      ["Nemocón","Cundinamarca"],["Bojacá","Cundinamarca"],["El Rosal","Cundinamarca"],
+      // GUAINÍA
+      ["Inírida","Guainía"],
+      // GUAVIARE
+      ["San José del Guaviare","Guaviare"],
+      // HUILA
+      ["Neiva","Huila"],["Pitalito","Huila"],["Garzón","Huila"],
+      ["La Plata","Huila"],["Campoalegre","Huila"],["Rivera","Huila"],
+      ["Palermo","Huila"],["San Agustín","Huila"],
+      // LA GUAJIRA
+      ["Riohacha","La Guajira"],["Maicao","La Guajira"],["Uribia","La Guajira"],
+      ["Manaure","La Guajira"],["Fonseca","La Guajira"],
+      // MAGDALENA
+      ["Santa Marta","Magdalena"],["Ciénaga","Magdalena"],["Fundación","Magdalena"],
+      ["Aracataca","Magdalena"],["El Banco","Magdalena"],["Plato","Magdalena"],
+      // META
+      ["Villavicencio","Meta"],["Acacías","Meta"],["Granada","Meta"],
+      ["Puerto López","Meta"],["San Martín","Meta"],["Restrepo","Meta"],
+      ["Cumaral","Meta"],["Castilla la Nueva","Meta"],
+      // NARIÑO
+      ["Pasto","Nariño"],["Tumaco","Nariño"],["Ipiales","Nariño"],
+      ["Túquerres","Nariño"],["La Unión","Nariño"],["Samaniego","Nariño"],
+      // NORTE DE SANTANDER
+      ["Cúcuta","Norte de Santander"],["Bucarasica","Norte de Santander"],
+      ["Ocaña","Norte de Santander"],["Pamplona","Norte de Santander"],
+      ["Villa del Rosario","Norte de Santander"],["Los Patios","Norte de Santander"],
+      ["El Zulia","Norte de Santander"],["Tibú","Norte de Santander"],
+      // PUTUMAYO
+      ["Mocoa","Putumayo"],["Puerto Asís","Putumayo"],["Orito","Putumayo"],
+      ["San Francisco","Putumayo"],["Sibundoy","Putumayo"],["Valle del Guamuez","Putumayo"],
+      // QUINDÍO
+      ["Armenia","Quindío"],["Calarcá","Quindío"],["Montenegro","Quindío"],
+      ["Quimbaya","Quindío"],["La Tebaida","Quindío"],["Circasia","Quindío"],
+      ["Filandia","Quindío"],["Salento","Quindío"],
+      // RISARALDA
+      ["Pereira","Risaralda"],["Dosquebradas","Risaralda"],["Santa Rosa de Cabal","Risaralda"],
+      ["La Virginia","Risaralda"],["Marsella","Risaralda"],["Belén de Umbría","Risaralda"],
+      // SAN ANDRÉS
+      ["San Andrés","San Andrés y Providencia"],["Providencia","San Andrés y Providencia"],
+      // SANTANDER
+      ["Bucaramanga","Santander"],["Floridablanca","Santander"],["Girón","Santander"],
+      ["Piedecuesta","Santander"],["Barrancabermeja","Santander"],["San Gil","Santander"],
+      ["Socorro","Santander"],["Vélez","Santander"],["Málaga","Santander"],
+      ["Barbosa","Santander"],["Lebrija","Santander"],["Rionegro","Santander"],
+      // SUCRE
+      ["Sincelejo","Sucre"],["Corozal","Sucre"],["Sampués","Sucre"],
+      ["San Marcos","Sucre"],["Tolú","Sucre"],["Morroa","Sucre"],
+      // TOLIMA
+      ["Ibagué","Tolima"],["Espinal","Tolima"],["Melgar","Tolima"],
+      ["Honda","Tolima"],["Chaparral","Tolima"],["Mariquita","Tolima"],
+      ["Líbano","Tolima"],["Flandes","Tolima"],["Purificación","Tolima"],
+      // VALLE DEL CAUCA
+      ["Cali","Valle del Cauca"],["Buenaventura","Valle del Cauca"],
+      ["Palmira","Valle del Cauca"],["Tuluá","Valle del Cauca"],
+      ["Buga","Valle del Cauca"],["Cartago","Valle del Cauca"],
+      ["Yumbo","Valle del Cauca"],["Jamundí","Valle del Cauca"],
+      ["Candelaria","Valle del Cauca"],["Dagua","Valle del Cauca"],
+      ["La Cumbre","Valle del Cauca"],["Zarzal","Valle del Cauca"],
+      ["Roldanillo","Valle del Cauca"],["Sevilla","Valle del Cauca"],
+      ["El Cerrito","Valle del Cauca"],["Ginebra","Valle del Cauca"],
+      // VAUPÉS
+      ["Mitú","Vaupés"],
+      // VICHADA
+      ["Puerto Carreño","Vichada"],
+    ];}
+
+    /* ============================
+       AUTOCOMPLETE MUNICIPIO
+       ============================ */
+    let municipioSeleccionado = false;
+
+    /* Poblar select de departamentos al cargar */
+    window.addEventListener('DOMContentLoaded', () => {
+      const sel = document.getElementById('select-depto');
+      if (sel && typeof DEPARTAMENTOS_CO !== 'undefined') {
+        DEPARTAMENTOS_CO.forEach(d => {
+          const o = document.createElement('option');
+          o.value = d; o.textContent = d;
+          sel.appendChild(o);
+        });
+      }
+    });
+
+    function normalizar(s) {
+      return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    }
+
+    function buscarMunicipio(query) {
+      const dropdown = document.getElementById('municipio-dropdown');
+      // Reset departamento al escribir de nuevo
+      setDeptoAuto('');
+      document.getElementById('depto-tag').style.display = 'none';
+
+      const q = query.trim();
+      if (q.length === 0) { cerrarDropdown(); return; }
+
+      const qn = normalizar(q);
+      const resultados = MUNICIPIOS_CO
+        .filter(([mun]) => normalizar(mun).includes(qn))
+        .slice(0, 10);
+
+      if (resultados.length === 0) {
+        dropdown.innerHTML = `
+          <div class="municipio-no-result">
+            🔍 Municipio no encontrado<br>
+            <small>Elige tu departamento manualmente abajo 👇</small>
+          </div>`;
+      } else {
+        const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+        dropdown.innerHTML = resultados.map(([mun, dep]) => {
+          const munHtml = mun.replace(regex, '<mark>$1</mark>');
+          return `<div class="municipio-item" onmousedown="elegirMunicipio('${mun.replace(/'/g,"\\'")}','${dep.replace(/'/g,"\\'")}')">
+            <span class="municipio-nombre">${munHtml}</span>
+            <span class="municipio-depto">${dep}</span>
+          </div>`;
+        }).join('');
+      }
+
+      dropdown.classList.add('open');
+      document.getElementById('input-ciudad').style.borderRadius = '12px 12px 0 0';
+    }
+
+    function elegirMunicipio(municipio, departamento) {
+      document.getElementById('input-ciudad').value = municipio;
+      municipioSeleccionado = true;
+      cerrarDropdown();
+      setDeptoAuto(departamento);   // autocompleta el select de departamento
+
+      // Borde verde en municipio
+      const inp = document.getElementById('input-ciudad');
+      inp.style.borderColor = '#4CAF50';
+      inp.style.boxShadow   = '0 0 0 4px rgba(76,175,80,0.12)';
+    }
+
+    function setDeptoAuto(depto) {
+      document.getElementById('input-departamento').value = depto;
+      const badge   = document.getElementById('depto-auto-badge');
+      const sel     = document.getElementById('select-depto');
+      const okManual= document.getElementById('depto-manual-ok');
+      if (depto) {
+        sel.value = depto;                      // autocompletar
+        badge.style.display = 'inline';         // "✓ autocompletado"
+        if (okManual) okManual.style.display = 'none';
+      } else {
+        sel.value = '';
+        badge.style.display = 'none';
+      }
+    }
+
+    function elegirDeptoManual(val) {
+      document.getElementById('input-departamento').value = val;
+      const badge = document.getElementById('depto-manual-ok');
+      const ciudad = document.getElementById('input-ciudad').value.trim();
+      if (badge) {
+        if (val) {
+          badge.innerHTML = `✅ Entrega a <strong>${ciudad || 'tu municipio'}, ${val}</strong>`;
+          badge.style.display = 'block';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+    }
+
+    function cerrarDropdown() {
+      document.getElementById('municipio-dropdown').classList.remove('open');
+      document.getElementById('input-ciudad').style.borderRadius = '12px';
+    }
+
+    function limpiarCiudad() {
+      document.getElementById('input-ciudad').value = '';
+      setDeptoAuto('');
+      const tag = document.getElementById('depto-tag');
+      if (tag) tag.style.display = 'none';
+      const okManual = document.getElementById('depto-manual-ok');
+      if (okManual) okManual.style.display = 'none';
+      const inp = document.getElementById('input-ciudad');
+      inp.style.borderColor = '';
+      inp.style.boxShadow   = '';
+      municipioSeleccionado = false;
+      inp.focus();
+    }
+
+    /* ============================
+       VALIDACIÓN EN TIEMPO REAL (mientras escribe)
+       ============================ */
+    // Recibe el ELEMENTO input (sirve para teléfono 1 y 2)
+    function validarTelMovil(input, esBlur = false) {
+      const valor = input.value;
+      const hint  = input.parentElement.querySelector('.tel-hint');
+      if (!hint) return;
+
+      const mostrarError = (msg) => {
+        hint.textContent = '⚠️ ' + msg;
+        hint.className = 'tel-hint error visible';
+        input.classList.remove('input-ok');
+        input.classList.add('input-error');
+      };
+      const mostrarOk = (msg) => {
+        hint.textContent = '✅ ' + msg;
+        hint.className = 'tel-hint success visible';
+        input.classList.remove('input-error');
+        input.classList.add('input-ok');
+      };
+      const limpiar = () => {
+        hint.className = 'tel-hint';
+        hint.textContent = '';
+        input.classList.remove('input-error', 'input-ok');
+      };
+
+      // Campo vacío → no mostrar nada (la obligatoriedad se valida al enviar)
+      if (valor.length === 0) { limpiar(); return; }
+
+      // Regla 1: comenzar por 3
+      if (!valor.startsWith('3')) {
+        mostrarError('El número debe comenzar por 3 — Ej: 3001234567');
+        return;
+      }
+      // Regla 2: progreso de dígitos
+      if (valor.length < 10) {
+        const faltan = 10 - valor.length;
+        hint.textContent = `📱 Faltan ${faltan} dígito${faltan > 1 ? 's' : ''} — ${valor.length}/10`;
+        hint.className = 'tel-hint error visible';
+        input.classList.remove('input-ok');
+        input.classList.add('input-error');
+        return;
+      }
+      // Regla 3: válido
+      if (valor.length === 10) mostrarOk('Número válido ✓');
+    }
+
+    // Guarda el campo que originó el error para enfocarlo al cerrar el modal
+    let inputErrorTel = null;
+
+    function mostrarModalTel(titulo, mensaje, valorIngresado, input) {
+      const modal = document.getElementById('modal-tel');
+      inputErrorTel = input || document.getElementById('input-telefono');
+
+      document.getElementById('modal-tel-title').textContent     = titulo;
+      document.getElementById('modal-tel-msg').textContent       = mensaje;
+      document.getElementById('modal-input-preview').textContent = valorIngresado || '—';
+
+      if (inputErrorTel) {
+        inputErrorTel.classList.add('input-error');
+        setTimeout(() => inputErrorTel.classList.remove('input-error'), 600);
+      }
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarModalTel() {
+      const modal = document.getElementById('modal-tel');
+      const box   = modal.querySelector('.modal-box');
+      box.classList.add('closing');
+      setTimeout(() => {
+        modal.classList.remove('show');
+        box.classList.remove('closing');
+        document.body.style.overflow = '';
+        if (inputErrorTel) inputErrorTel.focus();
+      }, 280);
+    }
+
+    // Valida un teléfono. requerido=true exige que no esté vacío.
+    function validarTelefono(input, requerido, etiqueta) {
+      const valor = input.value.trim();
+      etiqueta = etiqueta || 'celular';
+
+      if (valor.length === 0) {
+        if (requerido) {
+          mostrarModalTel('📵 Campo requerido',
+            `Por favor ingresa tu número de ${etiqueta} para continuar con el pedido.`,
+            valor, input);
+          return false;
+        }
+        return true; // opcional y vacío → válido
+      }
+      if (!valor.startsWith('3')) {
+        mostrarModalTel('❌ Número inválido',
+          `El ${etiqueta} debe comenzar por 3.\nEjemplo: 3001234567, 3151234567`,
+          valor, input);
+        return false;
+      }
+      if (valor.length !== 10) {
+        mostrarModalTel('⚠️ Faltan dígitos',
+          `El ${etiqueta} debe tener exactamente 10 dígitos. Llevas ${valor.length} dígito${valor.length !== 1 ? 's' : ''}.`,
+          valor, input);
+        return false;
+      }
+      return true;
+    }
+
+    /* ============================
+       CONTADORES ANIMADOS
+       ============================ */
+    function animateCounters() {
+      document.querySelectorAll('.counter-num').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = target === 5 ? '4.8' : (target > 100 ? Math.floor(current).toLocaleString('es-CO') + '+' : Math.floor(current) + '%');
+        }, 30);
+      });
+    }
+
+    /* ============================
+       FAQ TOGGLE
+       ============================ */
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    /* ============================
+       ENVÍO DE FORMULARIO
+       ============================ */
+    function enviarPedido(e) {
+      e.preventDefault();
+
+      // ── Validar teléfono 1 (obligatorio) ──
+      const tel1 = document.getElementById('input-telefono');
+      if (!validarTelefono(tel1, true, 'teléfono principal')) return;
+
+      // ── Validar teléfono 2 (opcional, solo si lo llenó) ──
+      const tel2 = document.getElementById('input-telefono2');
+      if (!validarTelefono(tel2, false, 'teléfono adicional')) return;
+
+      // ── Validar color elegido ──
+      const colorVal = document.getElementById('form-color-value').value;
+      if (!colorVal) {
+        document.getElementById('form-color-grid').scrollIntoView({behavior:'smooth', block:'center'});
+        document.getElementById('form-color-elegido').textContent = '⚠️ Por favor elige un color';
+        document.getElementById('form-color-elegido').style.color = '#c62828';
+        return;
+      }
+      const form = document.getElementById('form-pedido');
+      const data = new FormData(form);
+      const body = Object.fromEntries(data.entries());
+
+      // Departamento (auto o manual)
+      const depto = document.getElementById('input-departamento').value
+                  || document.getElementById('select-depto').value || '';
+
+      const nombreCompleto = `${body.nombres} ${body.apellidos}`;
+
+      // Texto del pedido (se usa para email y WhatsApp)
+      const lineasPedido =
+        `🛒 NUEVO PEDIDO — BlendGo Pro\n\n` +
+        `👤 Nombre: ${nombreCompleto}\n` +
+        `📱 Teléfono 1: ${body.telefono}\n` +
+        `📱 Teléfono 2: ${body.telefono2 || '(no indicado)'}\n` +
+        `📍 Dirección: ${body.direccion}\n` +
+        `🏘️ Barrio: ${body.barrio}\n` +
+        `🏙️ Municipio: ${body.ciudad}\n` +
+        `🗺️ Departamento: ${depto}\n` +
+        `📝 Notas: ${body.notas || '(ninguna)'}\n` +
+        `🎨 Color: ${body.color}\n` +
+        `🔢 Cantidad: ${body.cantidad}`;
+
+      // ── 1. ENVIAR AL CORREO (EmailJS, en segundo plano) ──
+      if (typeof emailjs !== 'undefined'
+          && EMAILJS_PUBLIC_KEY  !== "PEGA_TU_PUBLIC_KEY"
+          && EMAILJS_SERVICE_ID  !== "PEGA_TU_SERVICE_ID"
+          && EMAILJS_TEMPLATE_ID !== "PEGA_TU_TEMPLATE_ID") {
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          nombre: nombreCompleto,
+          telefono_1: body.telefono,
+          telefono_2: body.telefono2 || '(no indicado)',
+          direccion: body.direccion,
+          barrio: body.barrio,
+          municipio: body.ciudad,
+          departamento: depto,
+          notas: body.notas || '(ninguna)',
+          color: body.color,
+          cantidad: body.cantidad,
+          pedido_completo: lineasPedido
+        }).catch(err => console.warn('EmailJS error:', err));
+      }
+
+      // ── 2. ABRIR WHATSAPP HACIA TU NÚMERO con el pedido escrito ──
+      if (WHATSAPP_NUMERO && !WHATSAPP_NUMERO.includes('X')) {
+        const waMsg = encodeURIComponent(lineasPedido);
+        window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${waMsg}`, '_blank');
+      }
+
+      // ── 3. Mostrar confirmación al cliente ──
+      form.style.display = 'none';
+      document.getElementById('mensaje-exito').classList.add('visible');
+      document.getElementById('mensaje-exito').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* ============================
+       WHATSAPP
+       ============================ */
+    const waBtn = document.getElementById('whatsapp-float');
+    if (WHATSAPP_ACTIVO && WHATSAPP_NUMERO && !WHATSAPP_NUMERO.includes('X')) {
+      const msg = encodeURIComponent("Hola, quiero pedir la licuadora BlendGo Pro 🥤");
+      waBtn.href   = `https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`;
+      waBtn.classList.add('visible');
+    }
+
+    /* ============================
+       ANIMACIONES SCROLL
+       ============================ */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Activar contadores cuando la sección social es visible
+          if (entry.target.closest('.social-proof-section')) animateCounters();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Observar sección de contadores
+    const socialSection = document.querySelector('.social-proof-section');
+    if (socialSection) observer.observe(socialSection);
+
+    /* ============================
+       COLOR INICIAL AL CARGAR
+       Carga imágenes de Cloudinary vía localStorage
+       ============================ */
+    window.addEventListener('load', () => {
+      // Mostrar galería verde por defecto (sin preseleccionar en el formulario)
+      mostrarGaleria('verde');
+    });
+  </script>
+
+</body>
+</html>

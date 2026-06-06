@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Subir Imágenes BlendGo Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- SDK Cloudinary Upload Widget -->
+  <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0d1117;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .admin-header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .admin-logo {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4CAF50, #00BCD4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .admin-sub { font-size: 13px; color: #546e7a; margin-top: 2px; }
+    .btn-ver-landing {
+      background: linear-gradient(135deg, #4CAF50, #00BCD4);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .btn-ver-landing:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ── Alert ── */
+    .alert {
+      margin: 20px 24px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .alert-warning {
+      background: rgba(255, 193, 7, 0.08);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      color: #ffe082;
+    }
+    .alert-info {
+      background: rgba(33, 150, 243, 0.08);
+      border: 1px solid rgba(33, 150, 243, 0.3);
+      color: #90caf9;
+    }
+    .alert strong { font-weight: 700; display: block; margin-bottom: 6px; }
+    .alert ol { padding-left: 18px; }
+    .alert ol li { margin: 4px 0; }
+    .alert code {
+      background: rgba(0,0,0,0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #80cbc4;
+    }
+    .alert a { color: #64b5f6; }
+
+    /* ── Main ── */
+    .admin-main {
+      padding: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Estado del preset */
+    .preset-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-ok    { background: #4CAF50; box-shadow: 0 0 8px #4CAF50; }
+    .dot-warn  { background: #FFC107; box-shadow: 0 0 8px #FFC107; }
+    .dot-error { background: #F44336; box-shadow: 0 0 8px #F44336; }
+
+    /* ── Grid de colores ── */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .section-sub {
+      font-size: 13px;
+      color: #546e7a;
+      margin-bottom: 20px;
+    }
+    .colors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    /* Tarjeta de color */
+    .color-card {
+      background: #161b22;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .color-card:hover { border-color: rgba(255,255,255,0.18); }
+    .color-card.has-images { border-color: rgba(76,175,80,0.4); }
+
+    .color-card-header {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .color-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.15);
+    }
+    .color-info h3 { font-size: 15px; font-weight: 700; }
+    .color-info small { font-size: 12px; color: #546e7a; }
+    .color-badge {
+      margin-left: auto;
+      background: rgba(76,175,80,0.15);
+      color: #81c784;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 600;
+      display: none;
+    }
+    .color-card.has-images .color-badge { display: inline-block; }
+
+    .color-card-body { padding: 14px; }
+
+    /* Zona de preview de imágenes */
+    .preview-zona {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      min-height: 90px;
+      margin-bottom: 12px;
+    }
+    .preview-img-wrap {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      aspect-ratio: 1;
+    }
+    .preview-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .preview-img-wrap .btn-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 22px;
+      height: 22px;
+      background: rgba(244,67,54,0.9);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .preview-img-wrap:hover .btn-remove { opacity: 1; }
+    .preview-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 2px dashed rgba(255,255,255,0.1);
+      font-size: 26px;
+      color: rgba(255,255,255,0.15);
+    }
+
+    /* Botón subir */
+    .btn-upload {
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      border: 2px dashed;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-upload:hover { opacity: 0.8; }
+    .btn-upload:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Sección de URL generadas ── */
+    .urls-section {
+      background: #161b22;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .urls-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .urls-json {
+      background: #0d1117;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #a8d5a2;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .urls-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      padding: 9px 16px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-copy {
+      background: rgba(33,150,243,0.15);
+      color: #64b5f6;
+      border: 1px solid rgba(33,150,243,0.3);
+    }
+    .btn-copy:hover { background: rgba(33,150,243,0.25); }
+    .btn-clear {
+      background: rgba(244,67,54,0.1);
+      color: #ef9a9a;
+      border: 1px solid rgba(244,67,54,0.2);
+    }
+    .btn-clear:hover { background: rgba(244,67,54,0.2); }
+    .btn-sync {
+      background: rgba(76,175,80,0.15);
+      color: #a5d6a7;
+      border: 1px solid rgba(76,175,80,0.3);
+    }
+    .btn-sync:hover { background: rgba(76,175,80,0.25); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e272e;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 9999;
+      max-width: 300px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-left: 4px solid #4CAF50; }
+    .toast.error   { border-left: 4px solid #F44336; }
+    .toast.info    { border-left: 4px solid #2196F3; }
+
+    /* Spinner */
+    .uploading-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .uploading-overlay.show { display: flex; }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top-color: #4CAF50;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div>
+      <div class="admin-logo">⚡ BlendGo Pro — Admin</div>
+      <div class="admin-sub">Panel de gestión de imágenes con Cloudinary</div>
+    </div>
+    <a href="index.html" class="btn-ver-landing" target="_blank">Ver Landing →</a>
+  </header>
+
+  <!-- ALERTA: crear preset -->
+  <div class="alert alert-warning" id="alert-preset">
+    <strong>⚠️ Paso obligatorio antes de subir imágenes</strong>
+    <ol>
+      <li>Ve a <a href="https://console.cloudinary.com/settings/upload" target="_blank">console.cloudinary.com → Settings → Upload</a></li>
+      <li>Clic en <strong>"Add upload preset"</strong></li>
+      <li>Modo: <strong>Unsigned</strong></li>
+      <li>Nombre del preset: <code>blendgo_landing</code></li>
+      <li>Carpeta base: <code>blendgo-pro</code></li>
+      <li>Guarda los cambios y vuelve aquí</li>
+    </ol>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>ℹ️ Cómo funciona</strong>
+    Sube las fotos de cada color. Se guardan en Cloudinary y las URLs se almacenan automáticamente. La landing page las carga al instante sin que hagas nada más.
+  </div>
+
+  <main class="admin-main">
+
+    <!-- Estado del preset -->
+    <div class="preset-status" id="preset-status">
+      <div class="status-dot dot-warn" id="status-dot"></div>
+      <div>
+        <strong>Cloud:</strong> dltrz9yvn &nbsp;|&nbsp;
+        <strong>Preset:</strong> blendgo_landing &nbsp;|&nbsp;
+        <span id="status-text">Verifica el preset antes de subir imágenes</span>
+      </div>
+      <button class="btn-action btn-sync" style="margin-left:auto" onclick="verificarPreset()">Verificar</button>
+    </div>
+
+    <!-- Grid de colores -->
+    <div class="section-title">📸 Imágenes por color</div>
+    <p class="section-sub">Sube 1–5 fotos por color. La primera imagen será la principal en la landing.</p>
+
+    <div class="colors-grid" id="colors-grid">
+      <!-- Se genera con JS -->
+    </div>
+
+    <!-- URLs generadas -->
+    <div class="urls-section">
+      <h3>🔗 URLs en Cloudinary (guardadas automáticamente)</h3>
+      <div class="urls-json" id="urls-display">{ }</div>
+      <div class="urls-actions">
+        <button class="btn-action btn-copy"  onclick="copiarUrls()">📋 Copiar JSON</button>
+        <button class="btn-action btn-sync"  onclick="sincronizarLanding()">🔄 Sincronizar Landing</button>
+        <button class="btn-action btn-clear" onclick="limpiarTodo()">🗑️ Limpiar todo</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Overlay de carga -->
+  <div class="uploading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <p style="color:#fff;font-size:15px;font-weight:600">Subiendo a Cloudinary…</p>
+  </div>
+
+  <!-- Config central -->
+  <script src="cloudinary.config.js"></script>
+
+  <script>
+    /* ==========================================
+       DATOS DE COLORES
+       ========================================== */
+    const COLORES = [
+      { key: 'verde',   nombre: 'Verde Energía',  hex: '#4CAF50', emoji: '🍃' },
+      { key: 'rosa',    nombre: 'Rosa Pasión',     hex: '#E91E8C', emoji: '🌸' },
+      { key: 'azul',    nombre: 'Azul Océano',     hex: '#2196F3', emoji: '🌊' },
+      { key: 'morado',  nombre: 'Morado Real',     hex: '#9C27B0', emoji: '💜' },
+      { key: 'naranja', nombre: 'Naranja Vital',   hex: '#FF5722', emoji: '🍊' },
+      { key: 'blanco',  nombre: 'Blanco Polar',    hex: '#E0E0E0', emoji: '❄️'  },
+    ];
+
+    /* ==========================================
+       ESTADO LOCAL
+       ========================================== */
+    let imagesData = obtenerImagenesProducto(); // del cloudinary.config.js
+
+    /* ==========================================
+       CONSTRUIR GRID
+       ========================================== */
+    function buildGrid() {
+      const grid = document.getElementById('colors-grid');
+      grid.innerHTML = '';
+      COLORES.forEach(c => {
+        const imgs = imagesData[c.key] || [];
+        const hasImgs = imgs.length > 0;
+        grid.innerHTML += `
+          <div class="color-card ${hasImgs ? 'has-images' : ''}" id="card-${c.key}">
+            <div class="color-card-header">
+              <div class="color-dot" style="background:${c.hex}"></div>
+              <div class="color-info">
+                <h3>${c.emoji} ${c.nombre}</h3>
+                <small>${imgs.length}/5 fotos subidas</small>
+              </div>
+              <span class="color-badge">✓ Listo</span>
+            </div>
+            <div class="color-card-body">
+              <div class="preview-zona" id="preview-${c.key}">
+                ${renderPreviews(c.key, imgs)}
+              </div>
+              <button class="btn-upload"
+                style="color:${c.hex};border-color:${c.hex}40;"
+                id="btn-${c.key}"
+                onclick="abrirWidget('${c.key}')"
+                ${imgs.length >= 5 ? 'disabled title="Máximo 5 imágenes por color"' : ''}>
+                ☁️ Subir fotos — ${c.nombre}
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function renderPreviews(colorKey, imgs) {
+      let html = '';
+      imgs.forEach((url, i) => {
+        html += `
+          <div class="preview-img-wrap">
+            <img src="${url}" alt="imagen ${i+1}" loading="lazy">
+            <button class="btn-remove" onclick="eliminarImagen('${colorKey}', ${i})" title="Eliminar">✕</button>
+          </div>
+        `;
+      });
+      // Placeholders vacíos
+      const empty = 3 - imgs.length;
+      for (let i = 0; i < Math.min(empty, 3 - Math.min(imgs.length, 3)); i++) {
+        html += `<div class="preview-placeholder">📷</div>`;
+      }
+      return html;
+    }
+
+    /* ==========================================
+       CLOUDINARY UPLOAD WIDGET
+       ========================================== */
+    let activeWidget = null;
+
+    function abrirWidget(colorKey) {
+      const color = COLORES.find(c => c.key === colorKey);
+      const currentImgs = imagesData[colorKey] || [];
+      const remaining   = 5 - currentImgs.length;
+
+      if (remaining <= 0) {
+        showToast('Máximo 5 imágenes por color. Elimina alguna primero.', 'error');
+        return;
+      }
+
+      activeWidget = cloudinary.createUploadWidget({
+        cloudName:    CLOUDINARY_CONFIG.cloudName,
+        uploadPreset: CLOUDINARY_CONFIG.uploadPreset,
+        folder:       `${CLOUDINARY_CONFIG.folder}/${colorKey}`,
+        sources:      ['local', 'camera', 'url'],
+        multiple:     true,
+        maxFiles:     remaining,
+        resourceType: 'image',
+        clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp'],
+        maxFileSize:  10000000, // 10MB
+        showAdvancedOptions: false,
+        cropping:     false,
+        showSkipCropButton: false,
+        language:    'es',
+        text: {
+          es: {
+            menu:  { files: 'Mis archivos', camera: 'Cámara', url: 'Desde URL' },
+            queue: { title: `Fotos — ${color.nombre}`, title_uploading: 'Subiendo…' },
+          }
+        },
+        styles: {
+          palette: {
+            window:        '#1a1a2e',
+            windowBorder:  '#546E7A',
+            tabIcon:        color.hex,
+            menuIcons:     '#B0BEC5',
+            textDark:       '#ECEFF1',
+            textLight:      '#546E7A',
+            link:           color.hex,
+            action:         color.hex,
+            inactiveTabIcon:'#90A4AE',
+            error:          '#F44336',
+            inProgress:     color.hex,
+            complete:       '#4CAF50',
+            sourceBg:       '#16213e',
+          }
+        }
+      }, (error, result) => {
+        if (error) {
+          console.error('Error Cloudinary:', error);
+          if (error.status === 'unauthorized') {
+            showToast('❌ Preset no encontrado. Crea "blendgo_landing" como Unsigned en Cloudinary.', 'error');
+          } else {
+            showToast('Error al subir. Revisa la consola.', 'error');
+          }
+          return;
+        }
+
+        if (result.event === 'upload-added') {
+          document.getElementById('loading-overlay').classList.add('show');
+        }
+
+        if (result.event === 'success') {
+          document.getElementById('loading-overlay').classList.remove('show');
+          const info = result.info;
+          // URL optimizada con transformaciones
+          const url = cloudinaryUrl(info.public_id, 'producto');
+          if (!imagesData[colorKey]) imagesData[colorKey] = [];
+          imagesData[colorKey].push(url);
+          guardarImagenesProducto(colorKey, imagesData[colorKey]);
+          actualizarUI(colorKey);
+          showToast(`✅ Imagen subida — ${color.nombre}`, 'success');
+        }
+
+        if (result.event === 'queues-end') {
+          document.getElementById('loading-overlay').classList.remove('show');
+          actualizarUrlsDisplay();
+        }
+      });
+
+      activeWidget.open();
+    }
+
+    /* ==========================================
+       ELIMINAR IMAGEN
+       ========================================== */
+    function eliminarImagen(colorKey, index) {
+      if (!confirm('¿Eliminar esta imagen?')) return;
+      imagesData[colorKey].splice(index, 1);
+      guardarImagenesProducto(colorKey, imagesData[colorKey]);
+      actualizarUI(colorKey);
+      showToast('Imagen eliminada', 'info');
+    }
+
+    /* ==========================================
+       ACTUALIZAR UI
+       ========================================== */
+    function actualizarUI(colorKey) {
+      const imgs   = imagesData[colorKey] || [];
+      const card   = document.getElementById(`card-${colorKey}`);
+      const prev   = document.getElementById(`preview-${colorKey}`);
+      const btn    = document.getElementById(`btn-${colorKey}`);
+      const infoEl = card.querySelector('.color-info small');
+
+      prev.innerHTML  = renderPreviews(colorKey, imgs);
+      btn.disabled    = imgs.length >= 5;
+      infoEl.textContent = `${imgs.length}/5 fotos subidas`;
+      card.classList.toggle('has-images', imgs.length > 0);
+      actualizarUrlsDisplay();
+    }
+
+    function actualizarUrlsDisplay() {
+      document.getElementById('urls-display').textContent =
+        JSON.stringify(obtenerImagenesProducto(), null, 2);
+    }
+
+    /* ==========================================
+       VERIFICAR PRESET (intento básico)
+       ========================================== */
+    async function verificarPreset() {
+      const dot  = document.getElementById('status-dot');
+      const text = document.getElementById('status-text');
+      text.textContent = 'Verificando…';
+      dot.className = 'status-dot dot-warn';
+
+      try {
+        const res = await fetch(
+          `https://res.cloudinary.com/${CLOUDINARY_CONFIG.cloudName}/image/upload`,
+          { method: 'HEAD' }
+        );
+        dot.className  = 'status-dot dot-ok';
+        text.textContent = '✅ Conexión con Cloudinary OK — Cloud activo';
+        document.getElementById('alert-preset').style.display = 'none';
+        showToast('Cloudinary conectado correctamente', 'success');
+      } catch (e) {
+        dot.className  = 'status-dot dot-error';
+        text.textContent = '❌ No se pudo conectar con Cloudinary';
+        showToast('Error de conexión. Verifica tu internet.', 'error');
+      }
+    }
+
+    /* ==========================================
+       SINCRONIZAR LANDING
+       ========================================== */
+    function sincronizarLanding() {
+      actualizarUrlsDisplay();
+      showToast('✅ Landing sincronizada. Abre index.html para ver los cambios.', 'success');
+    }
+
+    /* ==========================================
+       COPIAR JSON
+       ========================================== */
+    function copiarUrls() {
+      const texto = JSON.stringify(obtenerImagenesProducto(), null, 2);
+      navigator.clipboard.writeText(texto)
+        .then(() => showToast('JSON copiado al portapapeles', 'success'))
+        .catch(() => showToast('No se pudo copiar. Cópialo manualmente.', 'error'));
+    }
+
+    /* ==========================================
+       LIMPIAR TODO
+       ========================================== */
+    function limpiarTodo() {
+      if (!confirm('¿Eliminar TODAS las URLs guardadas? (Las imágenes en Cloudinary se conservan)')) return;
+      localStorage.removeItem('blendgo_images');
+      imagesData = {};
+      buildGrid();
+      actualizarUrlsDisplay();
+      showToast('Todo limpiado. Las imágenes siguen en Cloudinary.', 'info');
+    }
+
+    /* ==========================================
+       TOAST
+       ========================================== */
+    let toastTimer;
+    function showToast(msg, type = 'info') {
+      const t = document.getElementById('toast');
+      t.textContent  = msg;
+      t.className    = `toast ${type} show`;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    /* ==========================================
+       INIT
+       ========================================== */
+    buildGrid();
+    actualizarUrlsDisplay();
+  </script>
+
+</body>
+</html>
