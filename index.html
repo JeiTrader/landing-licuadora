@@ -1969,8 +1969,8 @@
 
         <!-- 6. BARRIO -->
         <div class="form-group">
-          <label>Barrio <span class="req">*</span></label>
-          <input type="text" name="barrio" placeholder="Tu barrio" required>
+          <label>Notas <span style="font-weight:400;color:#90a4ae;font-size:12px">(Apto, casa, barrio, oficina — opcional)</span></label>
+          <input type="text" name="barrio" placeholder="Ej: Apto 301, Casa 5, Barrio Bosa...">
         </div>
 
         <!-- 7. MUNICIPIO -->
@@ -2134,9 +2134,14 @@
 
     const WHATSAPP_ACTIVO  = false;                   // botón flotante desactivado
 
-    // Inicializar EmailJS si ya pusiste tu Public Key
-    if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== "PEGA_TU_PUBLIC_KEY") {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    // EmailJS se inicializa cuando el SDK termina de cargar
+    function initEmailJS() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        console.log('✅ EmailJS inicializado correctamente');
+      } else {
+        console.warn('⚠️ EmailJS SDK aún no disponible');
+      }
     }
 
     /* ============================
@@ -2714,7 +2719,7 @@
         `📱 Teléfono 1: ${body.telefono}\n` +
         `📱 Teléfono 2: ${body.telefono2 || '(no indicado)'}\n` +
         `📍 Dirección: ${body.direccion}\n` +
-        `🏘️ Barrio: ${body.barrio}\n` +
+        `🏘️ Notas: ${body.barrio || '(ninguna)'}\n` +
         `🏙️ Municipio: ${body.ciudad}\n` +
         `🗺️ Departamento: ${depto}\n` +
         `📝 Notas: ${body.notas || '(ninguna)'}\n` +
@@ -2728,12 +2733,12 @@
       // ── 2. ENVIAR EMAIL PRIMERO (esperar que termine) ──
       try {
         if (typeof emailjs !== 'undefined') {
-          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          const resp = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
             nombre:          nombreCompleto,
             telefono_1:      body.telefono,
             telefono_2:      body.telefono2 || '(no indicado)',
             direccion:       body.direccion,
-            barrio:          body.barrio,
+            barrio:          body.barrio || '(ninguna)',
             municipio:       body.ciudad,
             departamento:    depto,
             notas:           body.notas || '(ninguna)',
@@ -2741,10 +2746,13 @@
             cantidad:        body.cantidad,
             pedido_completo: lineasPedido
           });
+          console.log('✅ Email enviado:', resp.status, resp.text);
+        } else {
+          console.warn('⚠️ EmailJS no disponible al enviar');
         }
       } catch(err) {
-        console.warn('EmailJS error:', err);
-        // Si falla el email, continuar igual (no bloquear al cliente)
+        console.error('❌ EmailJS error:', JSON.stringify(err));
+        // Continuar de todas formas para no bloquear al cliente
       }
 
       // ── 3. EMAIL ENVIADO → AHORA ABRIR WHATSAPP ──
@@ -2796,6 +2804,7 @@
     window.addEventListener('load', () => {
       mostrarGaleria('verde');
       iniciarChispas();
+      initEmailJS();
     });
 
     /* ============================
