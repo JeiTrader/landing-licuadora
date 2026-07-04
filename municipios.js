@@ -420,6 +420,44 @@ const MUNICIPIOS_CO = [
   // ── VICHADA (4) ──
   ["Cumaribo","Vichada"],["La Primavera","Vichada"],["Puerto Carreño","Vichada"],
   ["Santa Rosalía","Vichada"],
+
+  // ── CORREGIMIENTOS Y CENTROS POBLADOS CONOCIDOS ──
+  // Nariño
+  ["Llorente","Nariño"],["La Hormiga","Nariño"],["El Tigre","Nariño"],
+  ["El Charco","Nariño"],["La Tola","Nariño"],["Mosquera","Nariño"],
+  ["Francisco Pizarro","Nariño"],["Magüí Payán","Nariño"],
+  ["Olaya Herrera","Nariño"],["Roberto Payán","Nariño"],
+  ["Santa Bárbara de Iscuandé","Nariño"],
+  // Putumayo
+  ["La Hormiga","Putumayo"],["Valle del Guamuez","Putumayo"],
+  ["Orito","Putumayo"],["Puerto Asís","Putumayo"],["Puerto Caicedo","Putumayo"],
+  ["Puerto Guzmán","Putumayo"],["Puerto Leguízamo","Putumayo"],
+  ["San Miguel","Putumayo"],["Santiago","Putumayo"],["Sibundoy","Putumayo"],
+  ["Villagarzón","Putumayo"],
+  // Chocó
+  ["Acandí","Chocó"],["Alto Baudó","Chocó"],["Bahía Solano","Chocó"],
+  ["Bajo Baudó","Chocó"],["Bojayá","Chocó"],["Carmen del Darién","Chocó"],
+  ["Cértegui","Chocó"],["Condoto","Chocó"],["El Cantón del San Pablo","Chocó"],
+  ["El Carmen de Atrato","Chocó"],["El Litoral del San Juan","Chocó"],
+  ["Istmina","Chocó"],["Juradó","Chocó"],["Lloró","Chocó"],
+  ["Medio Atrato","Chocó"],["Medio Baudó","Chocó"],["Medio San Juan","Chocó"],
+  ["Nóvita","Chocó"],["Nuquí","Chocó"],["Río Iro","Chocó"],
+  ["Río Quito","Chocó"],["Riosucio","Chocó"],["San José del Palmar","Chocó"],
+  ["Sipí","Chocó"],["Tadó","Chocó"],["Unguía","Chocó"],["Unión Panamericana","Chocó"],
+  // Amazonas / Vaupés / Guainía
+  ["La Pedrera","Amazonas"],["Mirití-Paraná","Amazonas"],["Puerto Alegría","Amazonas"],
+  ["Puerto Arica","Amazonas"],["Puerto Santander","Amazonas"],["Tarapacá","Amazonas"],
+  ["Carurú","Vaupés"],["Pacoa","Vaupés"],["Papunahua","Vaupés"],
+  ["Taraira","Vaupés"],["Yavaraté","Vaupés"],
+  ["Barranco Minas","Guainía"],["Cacahual","Guainía"],["La Guadalupe","Guainía"],
+  ["Mapiripana","Guainía"],["Morichal","Guainía"],["Pana Pana","Guainía"],
+  ["Puerto Colombia","Guainía"],["San Felipe","Guainía"],
+  // Centros poblados adicionales frecuentes
+  ["Apartadó","Antioquia"],["Carepa","Antioquia"],["Chigorodó","Antioquia"],
+  ["Turbo","Antioquia"],["Necoclí","Antioquia"],["San Pedro de Urabá","Antioquia"],
+  ["Mutatá","Antioquia"],["Vigía del Fuerte","Antioquia"],["Murindó","Antioquia"],
+  ["El Bagre","Antioquia"],["Zaragoza","Antioquia"],["Segovia","Antioquia"],
+  ["Remedios","Antioquia"],["Yondó","Antioquia"],
 ];
 
 // Lista de departamentos para select manual

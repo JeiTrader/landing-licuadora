@@ -1124,18 +1124,68 @@
     .depto-tag .tag-clear:hover { color: #c62828; }
     /* Departamento siempre visible */
 
-    .form-mensaje {
-      display: none;
-      background: #e8f5e9;
-      border: 2px solid #4CAF50;
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-      margin-top: 16px;
-    }
+    .form-mensaje { display: none; }
     .form-mensaje.visible { display: block; }
-    .form-mensaje h3 { color: #2e7d32; font-size: 18px; margin-bottom: 6px; }
-    .form-mensaje p { color: #388e3c; font-size: 14px; }
+
+    /* ===== POPUP CONFIRMACIÓN PEDIDO ===== */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .popup-overlay.visible {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    .popup-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+      animation: slideUp 0.35s ease;
+    }
+    .popup-icon { font-size: 64px; margin-bottom: 12px; }
+    .popup-box h2 { color: #2e7d32; font-size: 24px; margin-bottom: 12px; }
+    .popup-box p { color: #555; font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+    .popup-btn {
+      background: linear-gradient(135deg, #4CAF50, #2e7d32);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .popup-btn:hover { transform: scale(1.04); }
+    .popup-cerrar {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+      border-radius: 50%;
+      transition: background 0.2s, color 0.2s;
+    }
+    .popup-cerrar:hover { background: #f0f0f0; color: #333; }
+    .popup-box { position: relative; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
     /* ===== CTA FINAL ===== */
     .cta-final-section {
@@ -1980,7 +2030,7 @@
           <input type="text" id="input-ciudad" name="ciudad"
             placeholder="Escribe tu municipio..." autocomplete="off" required
             oninput="buscarMunicipio(this.value)"
-            onblur="setTimeout(cerrarDropdown, 200)">
+            onblur="setTimeout(()=>{ validarMunicipioAlSalir(); cerrarDropdown(); }, 200)">
           <div id="depto-tag" class="depto-tag" style="display:none"></div>
           <input type="hidden" name="departamento" id="input-departamento">
           <div class="municipio-dropdown" id="municipio-dropdown"></div>
@@ -2542,6 +2592,19 @@
       document.getElementById('input-ciudad').style.borderRadius = '12px';
     }
 
+    function validarMunicipioAlSalir() {
+      if (municipioSeleccionado) return; // ya fue seleccionado del dropdown
+      const inp = document.getElementById('input-ciudad');
+      const query = normalizar(inp.value.trim());
+      if (!query) return;
+      // Buscar coincidencia exacta en la BD
+      const match = window.MUNICIPIOS_CO.find(([mun]) => normalizar(mun) === query);
+      if (match) {
+        elegirMunicipio(match[0], match[1]); // auto-selecciona y bloquea depto
+      }
+      // Si no hay coincidencia exacta → depto queda libre para escribir manual
+    }
+
     function limpiarCiudad() {
       document.getElementById('input-ciudad').value = '';
       setDeptoAuto('');
@@ -2721,6 +2784,17 @@
                     || document.getElementById('select-depto').value || '';
       const nombreCompleto = `${body.nombres} ${body.apellidos}`;
 
+      const confirmacionMsg = encodeURIComponent(
+        `Hola ${body.nombres}, confirmamos tu pedido de BlendGo Pro 🥤\n\n` +
+        `📦 ${body.cantidad}\n` +
+        `🎨 Color: ${body.color}\n` +
+        `📍 ${body.direccion}, ${body.barrio || ''} — ${body.ciudad}, ${depto}\n\n` +
+        `Tu pedido está en proceso. En breve te enviamos la guía de despacho. ¡Gracias por tu compra! 💚`
+      );
+      const tel1Link = `https://wa.me/57${body.telefono}?text=${confirmacionMsg}`;
+      const tel2Link = body.telefono2 ? `https://wa.me/57${body.telefono2}?text=${confirmacionMsg}` : null;
+
+      // Texto plano para WhatsApp
       const lineasPedido =
         `🛒 NUEVO PEDIDO — BlendGo Pro\n\n` +
         `👤 Nombre: ${nombreCompleto}\n` +
@@ -2732,6 +2806,23 @@
         `🗺️ Departamento: ${depto}\n` +
         `🎨 Color: ${body.color}\n` +
         `🔢 Cantidad: ${body.cantidad}`;
+
+      // HTML para el correo con links clickeables
+      const htmlPedido = `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;border:1px solid #e0e0e0;border-radius:8px;">
+          <h2 style="color:#4CAF50;border-bottom:2px solid #4CAF50;padding-bottom:10px;">🛒 Nuevo Pedido — BlendGo Pro</h2>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">👤 Nombre</td><td style="padding:8px 0;">${nombreCompleto}</td></tr>
+            <tr style="background:#f9f9f9;"><td style="padding:8px;font-weight:bold;color:#555;">📱 Teléfono 1</td><td style="padding:8px;"><a href="${tel1Link}" style="color:#25D366;font-weight:bold;text-decoration:none;">📲 Escribir al ${body.telefono}</a></td></tr>
+            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">📱 Teléfono 2</td><td style="padding:8px 0;">${tel2Link ? `<a href="${tel2Link}" style="color:#25D366;font-weight:bold;text-decoration:none;">📲 Escribir al ${body.telefono2}</a>` : '(no indicado)'}</td></tr>
+            <tr style="background:#f9f9f9;"><td style="padding:8px;font-weight:bold;color:#555;">📍 Dirección</td><td style="padding:8px;">${body.direccion}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">🏘️ Notas</td><td style="padding:8px 0;">${body.barrio || '(ninguna)'}</td></tr>
+            <tr style="background:#f9f9f9;"><td style="padding:8px;font-weight:bold;color:#555;">🏙️ Municipio</td><td style="padding:8px;">${body.ciudad}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">🗺️ Departamento</td><td style="padding:8px 0;">${depto}</td></tr>
+            <tr style="background:#f9f9f9;"><td style="padding:8px;font-weight:bold;color:#555;">🎨 Color</td><td style="padding:8px;">${body.color}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:bold;color:#555;">🔢 Cantidad</td><td style="padding:8px 0;">${body.cantidad}</td></tr>
+          </table>
+        </div>`;
 
       // ── 1. BLOQUEAR BOTÓN Y MOSTRAR ESTADO DE ENVÍO ──
       btnEnviar.disabled   = true;
@@ -2763,6 +2854,7 @@
             to:      CORREO_NOTIFICACION,
             message: {
               subject: `🛒 Nuevo pedido BlendGo Pro — ${nombreCompleto}`,
+              html:    htmlPedido,
               text:    lineasPedido
             }
           });
@@ -2775,17 +2867,15 @@
         // Continuar de todas formas para no bloquear al cliente
       }
 
-      // ── 3. EMAIL ENVIADO → AHORA ABRIR WHATSAPP ──
-      btnEnviar.textContent = '✅ Pedido enviado — abriendo WhatsApp...';
+      // ── 3. GUARDAR LINK DE WHATSAPP Y MOSTRAR POPUP ──
+      btnEnviar.textContent = '✅ Pedido enviado';
       if (WHATSAPP_NUMERO && !WHATSAPP_NUMERO.includes('X')) {
         const waMsg = encodeURIComponent(lineasPedido);
-        window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${waMsg}`, '_blank');
+        document.getElementById('popup-btn-wa').href = `https://wa.me/${WHATSAPP_NUMERO}?text=${waMsg}`;
       }
 
-      // ── 4. MOSTRAR CONFIRMACIÓN AL CLIENTE ──
-      form.style.display = 'none';
-      document.getElementById('mensaje-exito').classList.add('visible');
-      document.getElementById('mensaje-exito').scrollIntoView({ behavior: 'smooth' });
+      // ── 4. MOSTRAR POPUP DE CONFIRMACIÓN AL CLIENTE ──
+      document.getElementById('popup-pedido-ok').classList.add('visible');
     }
 
     /* ============================
@@ -2873,6 +2963,23 @@
       }, 700);
     }
   </script>
+
+  <!-- POPUP CONFIRMACIÓN PEDIDO -->
+  <div class="popup-overlay" id="popup-pedido-ok">
+    <div class="popup-box">
+      <button class="popup-cerrar" onclick="document.getElementById('popup-pedido-ok').classList.remove('visible')" title="Cerrar">✕</button>
+      <div class="popup-icon">🎉</div>
+      <h2>¡Pedido recibido!</h2>
+      <p>
+        Tu pedido de la <strong>BlendGo Pro</strong> ha sido registrado exitosamente.<br><br>
+        En breve nos comunicaremos contigo para confirmarte los detalles y enviarte la guía de despacho.<br><br>
+        ¡Gracias por tu compra! 💚
+      </p>
+      <a id="popup-btn-wa" href="#" target="_blank" class="popup-btn">
+        💬 Ver pedido en WhatsApp
+      </a>
+    </div>
+  </div>
 
 </body>
 </html>
