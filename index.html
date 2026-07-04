@@ -7,8 +7,9 @@
   <meta name="keywords" content="licuadora portatil, licuadora personal, licuadora usb, zumo, batido, jugo verde, colombia, fitness, salud">
   <title>BlendGo Pro — Licuadora Personal Portable | Envío Gratis Colombia</title>
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <!-- Cloudinary config -->
   <script src="cloudinary.config.js"></script>
@@ -2119,24 +2120,35 @@
     /* ============================
        VARIABLES CONFIGURABLES
        ============================ */
-    // 📧 EmailJS — saca estos 3 datos en https://dashboard.emailjs.com
-    const EMAILJS_PUBLIC_KEY   = "q3jZMqAor6ZeD1t_l";
-    const EMAILJS_PRIVATE_KEY  = "pZXLo5UgO4KD4rPRqTrGg";
-    const EMAILJS_SERVICE_ID   = "service_8q3qyb7";
-    const EMAILJS_TEMPLATE_ID  = "gci9e11";
+    // 🔥 Firebase — configuración del proyecto tienda-hadis
+    const FIREBASE_CONFIG = {
+      apiKey:            "AIzaSyDQsxNcWfS1v-edtUWpFhGHN-EzoR3xcpU",
+      authDomain:        "tienda-hadis.firebaseapp.com",
+      projectId:         "tienda-hadis",
+      storageBucket:     "tienda-hadis.firebasestorage.app",
+      messagingSenderId: "281912922170",
+      appId:             "1:281912922170:web:9bf575f47bdedc32f22503"
+    };
+
+    // 📦 Colección Firestore donde se guardan los pedidos de este producto
+    const FIRESTORE_COLECCION = "pedidos-licuadora";
+
+    // 📧 Correo que recibe las notificaciones de pedidos
+    const CORREO_NOTIFICACION = "tiendahadis@gmail.com";
 
     // 📱 Tu WhatsApp para recibir los pedidos
     const WHATSAPP_NUMERO  = "573123088194";
+    const WHATSAPP_ACTIVO  = false;
 
-    const WHATSAPP_ACTIVO  = false;                   // botón flotante desactivado
-
-    function initEmailJS() {
-      if (typeof emailjs !== 'undefined') {
-        emailjs.init({
-          publicKey:  EMAILJS_PUBLIC_KEY,
-          privateKey: EMAILJS_PRIVATE_KEY
-        });
-        console.log('✅ EmailJS listo');
+    // 🔥 Inicializar Firebase
+    let db = null;
+    function initFirebase() {
+      try {
+        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+        console.log('✅ Firebase listo');
+      } catch(err) {
+        console.error('❌ Firebase init error:', err);
       }
     }
 
@@ -2725,32 +2737,41 @@
       btnEnviar.disabled   = true;
       btnEnviar.textContent = '📧 Enviando pedido...';
 
-      // ── 2. ENVIAR EMAIL PRIMERO (esperar que termine) ──
+      // ── 2. GUARDAR PEDIDO EN FIRESTORE Y ENVIAR CORREO ──
       try {
-        if (typeof emailjs !== 'undefined') {
-          const resp = await emailjs.send(
-            EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_ID,
-            {
-              nombre:          nombreCompleto,
-              telefono_1:      body.telefono,
-              telefono_2:      body.telefono2 || '(no indicado)',
-              direccion:       body.direccion,
-              barrio:          body.barrio || '(ninguna)',
-              municipio:       body.ciudad,
-              departamento:    depto,
-              color:           body.color,
-              cantidad:        body.cantidad,
-              pedido_completo: lineasPedido
-            },
-            { publicKey: EMAILJS_PUBLIC_KEY, privateKey: EMAILJS_PRIVATE_KEY }
-          );
-          console.log('✅ Email enviado:', resp.status, resp.text);
+        if (db) {
+          const pedido = {
+            nombre:       nombreCompleto,
+            telefono_1:   body.telefono,
+            telefono_2:   body.telefono2 || '',
+            direccion:    body.direccion,
+            barrio:       body.barrio || '',
+            municipio:    body.ciudad,
+            departamento: depto,
+            color:        body.color,
+            cantidad:     body.cantidad,
+            fecha:        firebase.firestore.FieldValue.serverTimestamp(),
+            producto:     'BlendGo Pro — Licuadora'
+          };
+
+          // Guardar pedido
+          await db.collection(FIRESTORE_COLECCION).add(pedido);
+          console.log('✅ Pedido guardado en Firestore');
+
+          // Escribir en colección "mail" para que la extensión Trigger Email lo envíe
+          await db.collection('mail').add({
+            to:      CORREO_NOTIFICACION,
+            message: {
+              subject: `🛒 Nuevo pedido BlendGo Pro — ${nombreCompleto}`,
+              text:    lineasPedido
+            }
+          });
+          console.log('✅ Correo enviado vía Trigger Email');
         } else {
-          console.warn('⚠️ EmailJS SDK no cargó');
+          console.warn('⚠️ Firebase no inicializado');
         }
       } catch(err) {
-        console.error('❌ EmailJS error:', JSON.stringify(err));
+        console.error('❌ Firebase error:', err);
         // Continuar de todas formas para no bloquear al cliente
       }
 
@@ -2803,7 +2824,7 @@
     window.addEventListener('load', () => {
       mostrarGaleria('verde');
       iniciarChispas();
-      initEmailJS();
+      initFirebase();
     });
 
     /* ============================
